@@ -19,21 +19,29 @@
             margin: 0;
         }
 
+        .main-content {
+            display:flex;
+        }
+
         .container {
-            display: flex;
+            margin-left: 250px;
+            flex: 1;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-wrap: wrap; 
         }
 
         .content {
-            margin-left: 100px;
-            text-align: left;
+            margin: 30px; 
+            text-align: center;
+            flex: 1; 
+            max-width: 100%; 
         }
 
         .welcome-message {
             font-size: 36px;
-            margin-bottom: -40px;
+            margin-bottom: -20px; 
         }
 
         .subtitle {
@@ -43,19 +51,21 @@
         }
 
         .slideshow-container {
-            max-width: 300px;
-            margin-left: 20px;
+            display: flex; 
+            width: 100%;
+            margin-top: 10px;
         }
 
         .slideshow-container img {
             width: 100%;
+            max-width: 530px;
             border-radius: 8px;
-            margin-bottom: 10px;
+            margin-right: 10px; 
         }
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
             gap: 20px;
         }
 
@@ -78,18 +88,35 @@
         .button-container i {
             font-size: 2em;
         }
+
+        @media screen and (max-width: 768px) {
+
+            .slideshow-container{
+                display: none;
+            }
+
+            .main-content {
+                flex-direction: column; 
+                margin-left: 0;
+            }
+
+            .container {
+                margin-left: 0; 
+            }
+        }
     </style>
 </head>
 <body>
-    @include('sidebar')
-
+@include('sidebar')  
+    <div class="main-content">
+    
     <div class="container">
         <div class="content">
             <div class="welcome-message">
                 <h1>Welcome, {{ $user->first_name }} </h1>
             </div>
             <div class="subtitle">
-                Phlebolab aims to assist in reinforcing your knowledge regarding the principles of Phlebotomy.
+            To start, please click the Materials button to access the reading materials. Take note that the learning process for this application is sequential.
             </div>
 
             <div class="button-grid">
@@ -99,20 +126,28 @@
                 </div>
                 <div class="button-container">
                     <i class="fas fa-flask"></i>
-                    <p>2D Laboratory</p>
+                    <p>2D Laboratory Exercises</p>
                 </div>
                 <div class="button-container">
                     <i class="fas fa-file-alt"></i>
                     <p>Summative Assessment</p>
                 </div>
             </div>
+
+            <!-- fix this later -->
+            <div class="slideshow-container">
+                <img src="assets/images/slideshow/image1.jpg" alt="Slide 1">
+                <img src="assets/images/slideshow/image2.jpg" alt="Slide 2">
+                <img src="assets/images/slideshow/image3.jpg" alt="Slide 3">
+            </div>
         </div>
 
-        <div class="slideshow-container">
-            <img src="assets/images/slideshow/image1.jpg" alt="Slide 1">
-            <img src="assets/images/slideshow/image2.jpg" alt="Slide 2">
-            <img src="assets/images/slideshow/image3.jpg" alt="Slide 3">
-        </div>
+        
+
+        
     </div>
+    </div>
+
+
 </body>
 </html>

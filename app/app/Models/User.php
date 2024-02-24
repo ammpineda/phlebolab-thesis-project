@@ -16,4 +16,15 @@ class User extends Model
     public function results() {
         return $this->hasMany(Result::class, 'results_user_id', 'id');
     }
+
+    public function readingProgress()
+    {
+        return $this->hasOne(ReadingProgress::class, 'reading_progress_user_id');
+    }
+
+    public function labProgress()
+    {
+        return $this->hasOne(LabProgress::class, 'lab_progress_user_id');
+    }
+    
 }

@@ -33,11 +33,28 @@ class UserController extends Controller
             
             if($request->input('password') === $request->input('confirm_password')){
 
-                User::create([
+                $user = User::create([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
                     'email' => $request->input('email'),
                     'password' => $request->input('password'),
+                ]);
+
+
+                // automatically creates a record for progress tracking
+                $user->readingProgress()->create([
+                    'first_chapter_is_done' => false,
+                    'second_chapter_is_done' => false,
+                    'third_chapter_is_done' => false,
+                    'fourth_chapter_is_done' => false,
+                    'fifth_chapter_is_done' => false,
+                    'sixth_chapter_is_done' => false,
+                ]);
+
+                $user->labProgress()->create([
+                    'first_lab_is_done' => false,
+                    'second_lab_is_done' => false,
+                    'third_lab_is_done' => false,
                 ]);
 
             } else {
@@ -80,4 +97,5 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'Login failed. Invalid email or password.')->withInput();
         }
     }
+
 }
