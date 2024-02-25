@@ -58,7 +58,7 @@
 
         .slideshow-container img {
             width: 100%;
-            max-width: 530px;
+            max-width: 55vh;
             border-radius: 8px;
             margin-right: 10px; 
         }
