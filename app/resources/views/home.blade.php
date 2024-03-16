@@ -51,16 +51,19 @@
         }
 
         .slideshow-container {
-            display: flex; 
-            width: 100%;
+            display: flex;
+            justify-content: center;
             margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         .slideshow-container img {
-            width: 100%;
-            max-width: 55vh;
-            border-radius: 8px;
-            margin-right: 10px; 
+            flex: 1;
+            max-width: 33.33%; 
+            height: auto; 
+            margin-bottom: 10px;
+            opacity: 0; 
+            animation: fadeIn 1s ease forwards; 
         }
 
         .button-grid {
@@ -89,6 +92,15 @@
             font-size: 2em;
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0; 
+            }
+            to {
+                opacity: 1; 
+            }
+        }        
+
         @media screen and (max-width: 768px) {
 
             .slideshow-container{
@@ -116,7 +128,7 @@
                 <h1>Welcome, {{ $user->first_name }} </h1>
             </div>
             <div class="subtitle">
-            To start, please click the Materials button to access the reading materials. Take note that the learning process for this application is sequential.
+            To start, please click the Materials button to access the reading materials. Take note that the learning process for this application is sequential. Please follow the instructions provided, and ask for assistance if needed.
             </div>
 
             <div class="button-grid">

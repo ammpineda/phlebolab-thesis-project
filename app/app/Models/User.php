@@ -13,8 +13,8 @@ class User extends Model
 
     protected $fillable = ['first_name', 'last_name', 'email', 'password'];
 
-    public function results() {
-        return $this->hasMany(Result::class, 'results_user_id', 'id');
+    public function summativeResult() {
+        return $this->hasMany(SummativeResult::class, 'summative_results_user_id', 'id');
     }
 
     public function readingProgress()

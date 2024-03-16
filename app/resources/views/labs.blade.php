@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>PhleboLab | Reading Materials</title>
+    <title>PhleboLab | Laboratory Exercises</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -122,63 +122,46 @@
     <div class="container">
         <div class="content">
             <div class="welcome-message">
-                <h1>Reading Materials <i class="fas fa-book"></i></h1>
+                <h1>Laboratory Exercises <i class="fas fa-flask"></i></h1>
             </div>
             <div class="subtitle">
-                Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. Begin your learning journey by clicking on the respective chapters below.
+                In this laboratory session, you will perform the following exercises: <strong>Equipment Familiarization</strong> - Familiarize yourself with the various medical equipment used in phlebotomy procedures. <strong>Patient Identification</strong> - Learn the procedures for accurately identifying patients before performing blood collection. <strong>Venipuncture using Syringe</strong> - Practice the technique of venipuncture using syringes under supervision. 
+                After each exercise, you will be prompted to answer an ungraded practice quiz relevant to the laboratory exercises. <br><br>
+                To begin, ensure that you have completed all the reading materials before starting the first laboratory exercise. 
             </div>
+
 
             <div class="button-grid">
                 <div class="button-container">
-                    <p><strong>Chapter 1:</strong><br> Introduction to Phlebotomy</p>
-                    <img src="assets/images/reading/chapter 1.jpg" alt="Chapter 1 Thumbnail"><br>
-                    <a href="{{ route('first_chapter') }}" class="open-button">Open</a>
-                </div>
-                <div class="button-container">
-                    <p><strong>Chapter 2:</strong><br>  Safety in Phlebotomy</p>
-                    <img src="assets/images/reading/chapter 2.jpg" alt="Chapter 2 Thumbnail"><br>
-                    @if($readingProgress->first_chapter_is_done)
-                        <a href="{{ route('second_chapter') }}" class="open-button">Open</a>
+                    <p><strong>Laboratory Exercise 1:</strong><br> Equipment Familiarization</p>
+                    <img src="assets/images/lab/lab1.png" alt="Exercise 1 Thumbnail"><br>
+                    @if($readingProgress->sixth_chapter_is_done)
+                        <a href="{{ route('exercise_1') }}" class="open-button">Open</a>
                     @else
                         <a href="" class="locked-button">Locked</a>
                     @endif
                 </div>
                 <div class="button-container">
-                    <p><strong>Chapter 3:</strong><br>  Basic Human Anatomy and Physiology</p>
-                    <img src="assets/images/reading/chapter 3.jpg" alt="Chapter 3 Thumbnail"><br>
-                    @if($readingProgress->second_chapter_is_done)
-                        <a href="{{ route('third_chapter') }}" class="open-button">Open</a>
+                    <p><strong>Laboratory Exercise 2:</strong><br>  Patient Identification</p>
+                    <img src="assets/images/lab/lab2.png" alt="Exercise 2 Thumbnail"><br>
+                    @if($labProgress->first_lab_is_done)
+                        <a href="{{ route('exercise_2') }}" class="open-button">Open</a>
                     @else
                         <a href="" class="locked-button">Locked</a>
                     @endif
                 </div>
                 <div class="button-container">
-                    <p><strong>Chapter 4:</strong><br>Anatomy and Physiology of the Circulatory System</p>
-                    <img src="assets/images/reading/chapter 4.jpg" alt="Chapter 4 Thumbnail"><br>
-                    @if($readingProgress->third_chapter_is_done)
-                        <a href="{{ route('fourth_chapter') }}" class="open-button">Open</a>
+                    <p><strong>Laboratory Exercise 3:</strong><br>  Venipuncture using Syringe</p>
+                    <img src="assets/images/lab/lab3.png" alt="Exercise 3 Thumbnail"><br>
+                    @if($labProgress->second_lab_is_done)
+                        <a href="{{ route('exercise_3') }}" class="open-button">Open</a>
                     @else
                         <a href="" class="locked-button">Locked</a>
                     @endif
                 </div>
-                <div class="button-container">
-                    <p><strong>Chapter 5:</strong><br>  Phlebotomy Equipment</p>
-                    <img src="assets/images/reading/chapter 5.jpg" alt="Chapter 5 Thumbnail"><br>
-                    @if($readingProgress->fourth_chapter_is_done)
-                        <a href="{{ route('fifth_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
-                </div>
-                <div class="button-container">
-                    <p><strong>Chapter 6:</strong><br>  Phlebotomy Technique</p>
-                    <img src="assets/images/reading/chapter 6.jpg" alt="Chapter 6 Thumbnail"><br>
-                    @if($readingProgress->fifth_chapter_is_done)
-                        <a href="{{ route('sixth_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
-                </div>
+                
+                
+                
             </div>
         </div>
     </div>

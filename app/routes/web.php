@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\LabProgressController;
 use App\Http\Controllers\ReadingProgressController;
+use App\Http\Controllers\SummativeResultController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -36,9 +38,12 @@ Route::get('/home',
 )->name('home');
 
 
+// Start Reading Materials
+
 Route::get('/reading-materials', 
     [ReadingProgressController::class, 'retrieveReadingProgress']
 )->name('reading-materials');
+
 
 // chapter 1
 
@@ -87,3 +92,58 @@ Route::get('/reading-chapter-6',
 )->name('sixth_chapter');
 
 Route::post('/chapter6-done', [ReadingProgressController::class, 'markChapterSixAsDone'])->name('chapter6-done');
+
+
+
+// Start Lab Exercises
+
+Route::get('/laboratory-exercises',
+    [LabProgressController::class, 'retrieveLabProgress']
+)->name('laboratory-exercises');
+
+
+// Exercise 1 
+Route::get('/laboratory-exercise-1', function () {
+    return view('lab exercises/lab1');
+})->name('exercise_1');
+
+Route::get('/laboratory-exercise-1/quiz',
+    [LabProgressController::class, 'toPracticeQuizOne']
+)->name('exercise_1_quiz');
+
+Route::post('/lab1-done', [LabProgressController::class, 'markExerciseOneAsDone'])->name('lab1-done');
+
+
+// Exercise 2
+
+Route::get('/laboratory-exercise-2', function () {
+    return view('lab exercises/lab2');
+})->name('exercise_2');
+
+Route::get('/laboratory-exercise-2/quiz',
+    [LabProgressController::class, 'toPracticeQuizTwo']
+)->name('exercise_2_quiz');
+
+Route::post('/lab2-done', [LabProgressController::class, 'markExerciseTwoAsDone'])->name('lab2-done');
+
+// Exercise 3
+
+Route::get('/laboratory-exercise-3', function () {
+    return view('lab exercises/lab3');
+})->name('exercise_3');
+
+Route::get('/laboratory-exercise-3/quiz',
+    [LabProgressController::class, 'toPracticeQuizThree']
+)->name('exercise_3_quiz');
+
+Route::post('/lab3-done', [LabProgressController::class, 'markExerciseThreeAsDone'])->name('lab3-done');
+
+
+
+// Start Summative
+Route::get('/summative-assessment',
+    [SummativeResultController::class, 'toTest']
+)->name('summative-quiz');
+
+Route::post('/test-done', [SummativeResultController::class, 'saveScore'])->name('test-done');
+

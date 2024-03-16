@@ -48,6 +48,7 @@
             text-align: center;
             color: whitesmoke;
             transition: width 0.3s;
+            z-index: 2;
         }
         .sidebar a {
             display: block;
@@ -117,11 +118,13 @@
         </div>
         <a href="{{ route('home') }}"><i class="fas fa-home"></i> Home</a>
         <a href="{{ route('reading-materials') }}"><i class="fas fa-book"></i> Materials</a>
-        <a href="#"><i class="fas fa-flask"></i> 2D Laboratory</a>
-        <a href="#"><i class="fas fa-file-alt"></i> Assessment</a>
-        <div class="logout">
-            <a href="{{ route('login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
-        </div>
+        <a href="{{ route('laboratory-exercises') }}"><i class="fas fa-flask"></i> 2D Laboratory</a>
+        <a href="{{ route('summative-quiz') }}"><i class="fas fa-file-alt"></i> Assessment</a>
+        @if(request()->is('home'))
+            <div class="logout">
+                <a href="{{ route('login') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        @endif
     </div>
     <script>
         function toggleSidebar() {

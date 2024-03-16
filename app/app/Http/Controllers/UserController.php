@@ -57,6 +57,10 @@ class UserController extends Controller
                     'third_lab_is_done' => false,
                 ]);
 
+                $user->summativeResult()->create([
+                    'score' => 0
+                ]);
+
             } else {
                 return redirect()->back()->with('error', 'The password fields do not match.')->withInput();
             }
