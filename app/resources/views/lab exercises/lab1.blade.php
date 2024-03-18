@@ -96,8 +96,8 @@
         }
 
         .shelf:hover::after,
-        .shelf:hover::before { /* Added */
-            opacity: 1; /* Show on hover */
+        .shelf:hover::before { 
+            opacity: 1; 
         }
 
         .shelf img {
@@ -116,7 +116,7 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             z-index: 9999;
-            display: none; /* Initially hidden */
+            display: none; 
         }
 
         .blur-background {
@@ -126,9 +126,9 @@
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px); /* Added */
-            z-index: 9998; /* Lower than popup */
-            display: none; /* Initially hidden */
+            backdrop-filter: blur(5px); 
+            z-index: 9998; 
+            display: none; 
         }
 
         .popup-button {
@@ -145,7 +145,7 @@
             top: 10px;
             right: 10px;
             font-size: 20px;
-            color: green; /* Color of the checkmark */
+            color: green; 
             z-index: 2;
             display: none;
         }
@@ -238,7 +238,7 @@
         </div>
     </div>
 
-    <!-- Popup container -->
+    
     <div class="popup-container" id="popupContainer">
         <button onclick="closePopup()" style="position: absolute; top: 10px; right: 10px; background-color: #25396d; color: white;">X</button>
         <h3 id="popupHeading"></h3>

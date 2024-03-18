@@ -383,7 +383,8 @@
             <form id="scoreForm" action="{{ route('test-done') }}" method="POST">
                 @csrf
                 <input type="hidden" name="score" id="testScore" value="">
-                <button class="quit" type="submit" class="toggle-button">Submit Score and Return to Home</button>
+                <button class="quit" type="submit" class="toggle-button">Return to Home</button>
+                <button id="viewButton" class="quit toggle-button">View Answers</button>
             </form>
 
             </div>
@@ -500,11 +501,11 @@
                 }
 
                 function showResult(){
-                    instr_box.classList.remove("activeInfo"); // Existing line
-                    result_box.classList.add("activeResult"); // Existing line
-                    const scoreText = result_box.querySelector(".score_text"); // Existing line
-                    let scoreTag = '<span>You Scored <p>'+ userScore +'</p> out of <p>'+ questions.length +'.</p></span>'; // Existing line
-                    scoreText.innerHTML = scoreTag; // Existing line
+                    instr_box.classList.remove("activeInfo");
+                    result_box.classList.add("activeResult");
+                    const scoreText = result_box.querySelector(".score_text"); 
+                    let scoreTag = '<span>You Scored <p>'+ userScore +'</p> out of <p>'+ questions.length +'.</p></span>'; 
+                    scoreText.innerHTML = scoreTag; 
 
                     
                     document.getElementById('testScore').value = userScore;
@@ -523,6 +524,10 @@
             function sendAlert() {
                     alert('Your laboratory exercise 3 is not yet accomplished. Please finish it before taking the test.');
                 }
+
+            document.getElementById("viewButton").addEventListener("click", function() {
+                window.open("{{ route('summative-quiz-answers') }}", "_blank");
+            });
         </script>
 
         

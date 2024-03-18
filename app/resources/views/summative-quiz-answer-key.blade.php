@@ -235,7 +235,7 @@
                 return questionHTML;
             }
 
-            // Loop through questions and append HTML to the document
+            
             questions.forEach(question => {
                 document.write(generateQuestionHTML(question));
             });

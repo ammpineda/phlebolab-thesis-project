@@ -147,3 +147,8 @@ Route::get('/summative-assessment',
 
 Route::post('/test-done', [SummativeResultController::class, 'saveScore'])->name('test-done');
 
+Route::get('/summative-assessment-answers', function () {
+    return view('summative-quiz-answer-key');
+})->name('summative-quiz-answers');
+
+
