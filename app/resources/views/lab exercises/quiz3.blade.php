@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>PhleboLab | Laboratory Exercise 3 - Practice Quiz</title>
+    
+    <link rel="icon" href="assets/images/favicon.ico.png" type="image/x-icon">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
