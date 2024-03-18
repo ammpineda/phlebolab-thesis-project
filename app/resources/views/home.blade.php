@@ -70,6 +70,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
             gap: 20px;
+            
         }
 
         .button-container {
@@ -80,6 +81,12 @@
             background-color: #2d4789;
             color: #fff;
             transition: transform 0.3s, box-shadow 0.3s;
+            
+        }
+
+        .button-container a {
+            text-decoration: none;
+            color: white;
         }
 
         .button-container:hover {
@@ -132,18 +139,26 @@
             </div>
 
             <div class="button-grid">
-                <div class="button-container">
+            <a href="{{ route('reading-materials') }}"><div class="button-container">
+                
                     <i class="fas fa-book"></i>
                     <p>Reading Materials</p>
-                </div>
-                <div class="button-container">
+                
+            </div></a>
+
+            <a href="{{ route('laboratory-exercises') }}"><div class="button-container">
+                
                     <i class="fas fa-flask"></i>
                     <p>2D Laboratory Exercises</p>
-                </div>
-                <div class="button-container">
+                
+            </div></a>
+
+            <a href="{{ route('summative-quiz') }}"><div class="button-container">
+                
                     <i class="fas fa-file-alt"></i>
                     <p>Summative Assessment</p>
-                </div>
+                
+            </div></a>
             </div>
 
             <!-- fix this later -->

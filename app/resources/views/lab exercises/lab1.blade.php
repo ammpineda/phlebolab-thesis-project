@@ -193,7 +193,7 @@
                         <div class="checkmark-overlay"></div> 
                         <img src="assets/images/equipment/tourniquet.png" alt="Equipment 2">
                     </div>
-                    <div class="shelf" id="alcoholPads" onclick="showPopup('These are pre-packaged, disposable wipes soaked in isopropyl alcohol. They are used to clean the skin before venipuncture to reduce the risk of contamination and infection. Alcohol pads effectively disinfect the puncture site by killing bacteria and other microorganisms present on the skin surface. Phlebotomists typically use alcohol pads to cleanse the venipuncture site thoroughly, ensuring a sterile environment for blood collection.', 'Acohol Pads/Swabs', 'alcoholPads')">
+                    <div class="shelf" id="alcoholPads" onclick="showPopup('These are pre-packaged, disposable wipes soaked in isopropyl alcohol. They are used to clean the skin before venipuncture to reduce the risk of contamination and infection. Alcohol pads effectively disinfect the puncture site by killing bacteria and other microorganisms present on the skin surface. Phlebotomists typically use alcohol pads to cleanse the venipuncture site thoroughly, ensuring a sterile environment for blood collection.', 'Alcohol Pads/Swabs', 'alcoholPads')">
                         <div class="checkmark-overlay"></div> 
                         <img src="assets/images/equipment/alcohol pads swabs.png" alt="Equipment 3">
                     </div>
