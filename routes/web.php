@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LabProgressController;
+use App\Http\Controllers\ManagementController;
 use App\Http\Controllers\ReadingProgressController;
 use App\Http\Controllers\SummativeResultController;
 use App\Http\Controllers\UserController;
@@ -151,4 +152,23 @@ Route::get('/summative-assessment-answers', function () {
     return view('summative-quiz-answer-key');
 })->name('summative-quiz-answers');
 
+
+
+
+// Management side
+Route::get('/management-home', 
+    [UserController::class, 'displayManagementHome']
+)->name('management-home');
+
+Route::get('/management/users', 
+    [ManagementController::class, 'displayManagementUsers']
+)->name('management-users');
+
+Route::post('/instructor/store', [ManagementController::class, 'addInstructor'])->name('instructor.store');
+
+Route::post('/student/store', [ManagementController::class, 'addStudent'])->name('student.store');
+
+Route::delete('/user/{id}', [ManagementController::class, 'destroy'])->name('user.delete');
+
+Route::put('/users/{id}', [ManagementController::class, 'update'])->name('user.update');
 

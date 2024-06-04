@@ -105,7 +105,7 @@
                 <div class="form">
                     <div class="details">
                         <div class="login-header">
-                        <h3>STUDENT LOGIN</h3>
+                        <h3>LOGIN</h3>
                         </div>
                     @if($errors->any())
                     <div class="alert alert-danger custom-error-alert">
