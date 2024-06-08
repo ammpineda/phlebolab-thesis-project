@@ -155,11 +155,12 @@ Route::get('/summative-assessment-answers', function () {
 
 
 
-// Management side
+// Management home page
 Route::get('/management-home', 
     [UserController::class, 'displayManagementHome']
 )->name('management-home');
 
+// Management page for users
 Route::get('/management/users', 
     [ManagementController::class, 'displayManagementUsers']
 )->name('management-users');
@@ -172,3 +173,10 @@ Route::delete('/user/{id}', [ManagementController::class, 'destroy'])->name('use
 
 Route::put('/users/{id}', [ManagementController::class, 'update'])->name('user.update');
 
+// Management page for reading materials
+
+Route::get('/management/materials', 
+    [ManagementController::class, 'displayManagementMaterials']
+)->name('management-materials');
+
+Route::put('/management/materials/{id}', [ManagementController::class, 'updateMaterial'])->name('materials.update');

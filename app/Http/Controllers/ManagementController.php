@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\LabProgress;
+use App\Models\ReadingMaterials;
 use App\Models\SummativeResult;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -118,5 +119,43 @@ class ManagementController extends Controller
 
         return redirect()->back()->with('success', 'User details updated successfully.');
     }
+
+
+    public function displayManagementMaterials(){
+        $reading_materials = ReadingMaterials::all();
+        return view('management/manage-materials', compact('reading_materials'));
+    }
+
+    public function updateMaterial(Request $request, $id)
+    {
+        $request->validate([
+            'lesson_title' => 'required|string|max:255',
+            'display_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+            'reading_material_pdf' => 'nullable|mimes:pdf|max:50000',
+        ]);
+
+        $material = ReadingMaterials::findOrFail($id);
+
+        $material->lesson_title = $request->input('lesson_title');
+
+        if ($request->hasFile('display_image')) {
+            $displayImage = $request->file('display_image');
+            $imagePath = $displayImage->getClientOriginalName(); // Get only the file name
+            $displayImage->storeAs('public/thumbnail', $imagePath);
+            $material->display_image = $imagePath;
+        }
+
+        if ($request->hasFile('reading_material_pdf')) {
+            $pdf = $request->file('reading_material_pdf');
+            $pdfPath = $pdf->getClientOriginalName(); // Get only the file name
+            $pdf->storeAs('public/pdf', $pdfPath);
+            $material->reading_material_pdf = $pdfPath;
+        }
+
+        $material->save();
+
+        return redirect()->back()->with('success', 'Material details updated successfully.');
+    }
+
 
 }

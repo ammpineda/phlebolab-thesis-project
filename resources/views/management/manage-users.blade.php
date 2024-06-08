@@ -363,7 +363,7 @@
                                         <input type="email" id="edit_email" name="email" value="{{ $user->email }}"><br>
 
                                         <label for="edit_password">Password:</label><br>
-                                        <input type="password" id="edit_password" name="password" value="{{ $user->password }}"><br>
+                                        <input type="text" id="edit_password" name="password" value="{{ $user->password }}"><br>
 
                                         <button type="submit">Update</button>
                                         <button type="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Cancel</button>

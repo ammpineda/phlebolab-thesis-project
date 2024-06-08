@@ -90,7 +90,7 @@
                  <!-- Insert description here     -->
                 </div>
 
-                <iframe class="pdf-iframe" src="assets/pdf/chapter4.pdf"></iframe>
+                <iframe class="pdf-iframe" src="{{ asset('storage/pdf/' . $material->reading_material_pdf) }}"></iframe>
                 <form action="{{ route('chapter4-done') }}" method="POST">
                     @csrf
                     <button type="submit" class="toggle-button"><i class="fas fa-check"></i>  Complete Reading</button>

@@ -133,12 +133,12 @@
             <div class="button-grid">
                 <div class="button-container">
                     <p><strong>Chapter 1:</strong><br> Introduction to Phlebotomy</p>
-                    <img src="assets/images/reading/chapter 1.jpg" alt="Chapter 1 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[0]->display_image) }}" alt="Chapter 1 Thumbnail"><br>
                     <a href="{{ route('first_chapter') }}" class="open-button">Open</a>
                 </div>
                 <div class="button-container">
                     <p><strong>Chapter 2:</strong><br>  Safety in Phlebotomy</p>
-                    <img src="assets/images/reading/chapter 2.jpg" alt="Chapter 2 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[1]->display_image) }}" alt="Chapter 2 Thumbnail"><br>
                     @if($readingProgress->first_chapter_is_done)
                         <a href="{{ route('second_chapter') }}" class="open-button">Open</a>
                     @else
@@ -147,7 +147,7 @@
                 </div>
                 <div class="button-container">
                     <p><strong>Chapter 3:</strong><br>  Basic Human Anatomy and Physiology</p>
-                    <img src="assets/images/reading/chapter 3.jpg" alt="Chapter 3 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[2]->display_image) }}" alt="Chapter 3 Thumbnail"><br>
                     @if($readingProgress->second_chapter_is_done)
                         <a href="{{ route('third_chapter') }}" class="open-button">Open</a>
                     @else
@@ -156,7 +156,7 @@
                 </div>
                 <div class="button-container">
                     <p><strong>Chapter 4:</strong><br>Anatomy and Physiology of the Circulatory System</p>
-                    <img src="assets/images/reading/chapter 4.jpg" alt="Chapter 4 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[3]->display_image) }}" alt="Chapter 4 Thumbnail"><br>
                     @if($readingProgress->third_chapter_is_done)
                         <a href="{{ route('fourth_chapter') }}" class="open-button">Open</a>
                     @else
@@ -165,7 +165,7 @@
                 </div>
                 <div class="button-container">
                     <p><strong>Chapter 5:</strong><br>  Phlebotomy Equipment</p>
-                    <img src="assets/images/reading/chapter 5.jpg" alt="Chapter 5 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[4]->display_image) }}" alt="Chapter 5 Thumbnail"><br>
                     @if($readingProgress->fourth_chapter_is_done)
                         <a href="{{ route('fifth_chapter') }}" class="open-button">Open</a>
                     @else
@@ -174,7 +174,7 @@
                 </div>
                 <div class="button-container">
                     <p><strong>Chapter 6:</strong><br>  Phlebotomy Technique</p>
-                    <img src="assets/images/reading/chapter 6.jpg" alt="Chapter 6 Thumbnail"><br>
+                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[5]->display_image) }}" alt="Chapter 6 Thumbnail"><br>
                     @if($readingProgress->fifth_chapter_is_done)
                         <a href="{{ route('sixth_chapter') }}" class="open-button">Open</a>
                     @else

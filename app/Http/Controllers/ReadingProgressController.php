@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\ReadingMaterials;
 use Illuminate\Http\Request;
 use App\Models\ReadingProgress;
 use App\Models\User;
@@ -15,6 +16,8 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+
+        $readingMaterials = ReadingMaterials::all();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -22,7 +25,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('materials', compact('user', 'readingProgress'));
+        return view('materials', compact('user', 'readingProgress', 'readingMaterials'));
     }
 
 
@@ -31,6 +34,7 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+        $material = ReadingMaterials::where('id',1)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -38,7 +42,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/first_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/first_chapter', compact('user', 'readingProgress','material'));
     }
 
     public function markChapterOneAsDone() {
@@ -60,6 +64,7 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+        $material = ReadingMaterials::where('id',2)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -67,7 +72,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/second_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/second_chapter', compact('user', 'readingProgress', 'material'));
     }
 
     public function markChapterTwoAsDone() {
@@ -90,6 +95,8 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+
+        $material = ReadingMaterials::where('id',3)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -97,7 +104,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/third_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/third_chapter', compact('user', 'readingProgress','material'));
     }
 
     public function markChapterThreeAsDone() {
@@ -119,6 +126,8 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+
+        $material = ReadingMaterials::where('id',4)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -126,7 +135,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/fourth_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/fourth_chapter', compact('user', 'readingProgress', 'material'));
     }
 
     public function markChapterFourAsDone() {
@@ -148,6 +157,8 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+
+        $material = ReadingMaterials::where('id',5)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -155,7 +166,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/fifth_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/fifth_chapter', compact('user', 'readingProgress','material'));
     }
 
     public function markChapterFiveAsDone() {
@@ -177,6 +188,8 @@ class ReadingProgressController extends Controller
         $userId = session('user_id');
         
         $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+
+        $material = ReadingMaterials::where('id',6)->first();
     
         if (!$readingProgress) {
             abort(404, 'Reading progress not found for the user.');
@@ -184,7 +197,7 @@ class ReadingProgressController extends Controller
     
         $user = User::findOrFail($userId);
         
-        return view('reading chapters/sixth_chapter', compact('user', 'readingProgress'));
+        return view('reading chapters/sixth_chapter', compact('user', 'readingProgress', 'material'));
     }
 
     public function markChapterSixAsDone() {

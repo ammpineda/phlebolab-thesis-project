@@ -132,28 +132,28 @@
             </div>
 
             <div class="button-grid">
-            <a href="{{ route('reading-materials') }}"><div class="button-container">
+            <a href="{{ route('management-users') }}"><div class="button-container">
                 
                     <i class="fas fa-pen"></i>
                     <p>Manage Users</p>
                 
             </div></a>
 
-            <a href="{{ route('laboratory-exercises') }}"><div class="button-container">
+            <a href="{{ route('management-materials') }}"><div class="button-container">
                 
                     <i class="fas fa-book"></i>
                     <p>Manage Materials</p>
                 
             </div></a>
 
-            <a href="{{ route('summative-quiz') }}"><div class="button-container">
+            <a href="{{ route('home') }}"><div class="button-container">
                 
                 <i class="fas fa-flask"></i>
                 <p>Manage 2D Laboratory</p>
             
             </div></a>
 
-            <a href="{{ route('summative-quiz') }}"><div class="button-container">
+            <a href="{{ route('home') }}"><div class="button-container">
                 
                     <i class="fas fa-file-alt"></i>
                     <p>Manage Quiz</p>

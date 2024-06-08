@@ -120,7 +120,7 @@
         </div>
         <a href="{{ route('management-home') }}"><i class="fas fa-home"></i> Home</a>
         <a href="{{ route('management-users') }}"><i class="fas fa-pen"></i> Manage Users</a>
-        <a href=""><i class="fas fa-book"></i> Manage Materials</a>
+        <a href="{{ route('management-materials') }}"><i class="fas fa-book"></i> Manage Materials</a>
         <a href=""><i class="fas fa-flask"></i> Manage 2D Laboratory</a>
         <a href=""><i class="fas fa-file-alt"></i> Manage Quiz</a>
         @if(request()->is('management-home'))
