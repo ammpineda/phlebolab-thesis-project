@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\LabProgress;
+use App\Models\QuizQuestions;
 use App\Models\ReadingMaterials;
 use App\Models\SummativeResult;
 use App\Models\User;
@@ -11,7 +12,9 @@ use Illuminate\Http\Request;
 
 class ManagementController extends Controller
 {
-    public function displayManagementUsers(){
+
+    public function displayManagementUsers()
+    {
         $users = User::all();
         $lab_progress = LabProgress::all();
         $summative_results = SummativeResult::all();
@@ -33,7 +36,7 @@ class ManagementController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'), 
+            'password' => $request->input('password'),
             'type' => 'Instructor'
         ]);
 
@@ -60,7 +63,7 @@ class ManagementController extends Controller
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-            'password' => $request->input('password'), 
+            'password' => $request->input('password'),
             'type' => 'Student'
         ]);
 
@@ -94,7 +97,7 @@ class ManagementController extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        
+
 
         $user->labProgress()->delete();
         $user->readingProgress()->delete();
@@ -106,22 +109,23 @@ class ManagementController extends Controller
 
     public function update(Request $request, $id)
     {
-        
+
         $user = User::findOrFail($id);
 
         // Update the user
         $user->update([
-        'first_name' => $request->input('first_name'),
-        'last_name' => $request->input('last_name'),
-        'email' => $request->input('email'),
-        'password' => $request->input('password'),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
         ]);
 
         return redirect()->back()->with('success', 'User details updated successfully.');
     }
 
 
-    public function displayManagementMaterials(){
+    public function displayManagementMaterials()
+    {
         $reading_materials = ReadingMaterials::all();
         return view('management/manage-materials', compact('reading_materials'));
     }
@@ -157,5 +161,52 @@ class ManagementController extends Controller
         return redirect()->back()->with('success', 'Material details updated successfully.');
     }
 
+    public function displayManagementLaboratory()
+    {
+        $questions = QuizQuestions::where('quiz_for', 'lab_1')
+            ->orWhere('quiz_for', 'lab_2')
+            ->orWhere('quiz_for', 'lab_3')
+            ->get();
 
+
+        return view('management/manage-laboratory', compact('questions'));
+    }
+
+    public function updateQuestion(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'question' => 'required|string',
+            'choice_a' => 'required|string',
+            'choice_b' => 'required|string',
+            'correct_answer' => 'required|string',
+            'quiz_for' => 'required|string'
+        ]);
+
+        $question = QuizQuestions::findOrFail($request->id);
+        $question->question = $request->question;
+        $question->choice_a = $request->choice_a;
+        $question->choice_b = $request->choice_b;
+
+        // Set the correct answer based on the selected option
+        if ($request->correct_answer === 'choice_a') {
+            $question->correct_answer = $request->choice_a;
+        } elseif ($request->correct_answer === 'choice_b') {
+            $question->correct_answer = $request->choice_b;
+        }
+
+        $question->quiz_for = $request->quiz_for;
+        $question->save();
+
+        return redirect()->back()->with('success', 'Question updated successfully');
+    }
+
+    public function displayManagementQuiz()
+    {
+        $questions = QuizQuestions::where('quiz_for', 'lab_4')
+            ->get();
+
+
+        return view('management/manage-quiz', compact('questions'));
+    }
 }

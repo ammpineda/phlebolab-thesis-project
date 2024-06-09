@@ -148,10 +148,10 @@ Route::get('/summative-assessment',
 
 Route::post('/test-done', [SummativeResultController::class, 'saveScore'])->name('test-done');
 
-Route::get('/summative-assessment-answers', function () {
-    return view('summative-quiz-answer-key');
-})->name('summative-quiz-answers');
 
+Route::get('/summative-assessment/answers',
+    [SummativeResultController::class, 'toTestAnswers']
+)->name('summative-quiz-answers');
 
 
 
@@ -180,3 +180,15 @@ Route::get('/management/materials',
 )->name('management-materials');
 
 Route::put('/management/materials/{id}', [ManagementController::class, 'updateMaterial'])->name('materials.update');
+
+// Management page for laboratory exercises and summative quiz
+
+Route::get('/management/laboratory', 
+    [ManagementController::class, 'displayManagementLaboratory']
+)->name('management-laboratory');
+
+Route::put('/questions/update', [ManagementController::class, 'updateQuestion'])->name('questions.update');
+
+Route::get('/management/quiz', 
+    [ManagementController::class, 'displayManagementQuiz']
+)->name('management-quiz');

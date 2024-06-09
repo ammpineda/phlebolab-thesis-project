@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\SummativeResult;
 use App\Models\LabProgress;
+use App\Models\QuizQuestions;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -29,7 +30,9 @@ class SummativeResultController extends Controller
 
         $isAllowed = $labProgress->third_lab_is_done;
 
-        return view('summative-quiz', compact('user', 'summativeTestProgress', 'isAllowed'));
+        $questions = QuizQuestions::where('quiz_for', 'lab_4')->get();
+
+        return view('summative-quiz', compact('user', 'summativeTestProgress', 'isAllowed', 'questions'));
 
     }
 
@@ -49,6 +52,14 @@ class SummativeResultController extends Controller
         $user = User::findOrFail($userId);
     
         return view('home', compact('user'));
+    }
+
+    public function toTestAnswers(){
+
+        $questions = QuizQuestions::where('quiz_for', 'lab_4')->get();
+
+        return view('summative-quiz-answer-key', compact('questions'));
+
     }
     
 }

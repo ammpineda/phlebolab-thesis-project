@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\LabProgress;
+use App\Models\QuizQuestions;
 use App\Models\ReadingProgress;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,8 +42,10 @@ class LabProgressController extends Controller
         }
     
         $user = User::findOrFail($userId);
+
+        $questions = QuizQuestions::where('quiz_for', 'lab_1')->get();
         
-        return view('lab exercises/quiz1', compact('user', 'labProgress'));
+        return view('lab exercises/quiz1', compact('user', 'labProgress', 'questions'));
 
     }
 
@@ -71,8 +74,10 @@ class LabProgressController extends Controller
         }
     
         $user = User::findOrFail($userId);
+
+        $questions = QuizQuestions::where('quiz_for', 'lab_2')->get();
         
-        return view('lab exercises/quiz2', compact('user', 'labProgress'));
+        return view('lab exercises/quiz2', compact('user', 'labProgress', 'questions'));
 
     }
 
@@ -102,8 +107,10 @@ class LabProgressController extends Controller
         }
     
         $user = User::findOrFail($userId);
+
+        $questions = QuizQuestions::where('quiz_for', 'lab_3')->get();
         
-        return view('lab exercises/quiz3', compact('user', 'labProgress'));
+        return view('lab exercises/quiz3', compact('user', 'labProgress', 'questions'));
 
     }
 

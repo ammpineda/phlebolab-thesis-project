@@ -146,14 +146,14 @@
                 
             </div></a>
 
-            <a href="{{ route('home') }}"><div class="button-container">
+            <a href="{{ route('management-laboratory') }}"><div class="button-container">
                 
                 <i class="fas fa-flask"></i>
                 <p>Manage 2D Laboratory</p>
             
             </div></a>
 
-            <a href="{{ route('home') }}"><div class="button-container">
+            <a href="{{ route('management-quiz') }}"><div class="button-container">
                 
                     <i class="fas fa-file-alt"></i>
                     <p>Manage Quiz</p>
