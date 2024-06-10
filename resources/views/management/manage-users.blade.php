@@ -152,9 +152,13 @@
             </div>
 
             <div class="content">
+                @if (session('is_instructor') && !session('is_admin'))
+                <p style="color: red;">This feature is not accessible to instructors.</p>
+                @else
                 <div class="button-bar">
                     <button class="add-button" onclick="toggleInstructorForm()" href="#instructor-form">+ Add Instructor</button>
                 </div>
+                @endif
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -182,18 +186,22 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->password }}</td>
                                 <td>
+                                    @if (session('is_instructor') && !session('is_admin'))
+                                    <p style="color: red;">Read only</p>
+                                    @else
                                     <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
-                                    <form action="{{ route('user.delete', $user->id) }}" method="POST">
+                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button class="delete-button">Delete</button>
                                     </form>
+                                    @endif
                                 </td>
                             </tr>
 
                             <!-- Edit User Form -->
                             <tr id="edit-instructor-form-{{ $user->id }}" style="display: none;">
-                                <td>
+                                <td colspan="6">
                                     <form action="{{ route('user.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -255,9 +263,13 @@
 
 
             <div class="content">
+                @if (session('is_instructor') && !session('is_admin'))
+                <p style="color: red;">This feature is not accessible to instructors.</p>
+                @else
                 <div class="button-bar">
                     <button class="add-button" onclick="toggleStudentForm()" href="#student-form">+ Add Student</button>
                 </div>
+                @endif
 
 
 
@@ -337,19 +349,23 @@
                                 </td>
 
                                 <td>
+                                    @if (session('is_instructor') && !session('is_admin'))
+                                    <p style="color: red;">Read only</p>
+                                    @else
                                     <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
-                                    <form action="{{ route('user.delete', $user->id) }}" method="POST">
+                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button class="delete-button">Delete</button>
                                     </form>
+                                    @endif
                                 </td>
 
                             </tr>
 
                             <!-- Edit User Form -->
                             <tr id="edit-student-form-{{ $user->id }}" style="display: none;">
-                                <td>
+                                <td colspan="10">
                                     <form action="{{ route('user.update', $user->id) }}" method="POST">
                                         @csrf
                                         @method('PUT')
@@ -366,7 +382,7 @@
                                         <input type="text" id="edit_password" name="password" value="{{ $user->password }}"><br>
 
                                         <button type="submit">Update</button>
-                                        <button type="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Cancel</button>
+                                        <button type="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Cancel</button>
                                     </form>
                                 </td>
                             </tr>
