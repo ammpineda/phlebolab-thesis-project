@@ -136,20 +136,20 @@
             z-index: 1;
             left: 0;
             top: 0;
-            margin-left: 120px;
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.4);
         }
 
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
         }
 
         .close {
@@ -164,6 +164,57 @@
             color: black;
             text-decoration: none;
             cursor: pointer;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-content form div {
+            margin-bottom: 15px;
+        }
+
+        .modal-content label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="file"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .modal-content button[type="submit"] {
+            background-color: #35B0E2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            background-color: #1b86b3;
+        }
+
+        .modal-content img {
+            margin-top: 10px;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .modal-content a {
+            margin-top: 10px;
+            display: inline-block;
         }
     </style>
 </head>
@@ -213,7 +264,7 @@
                                     <div>
                                         <label for="display_image">Display Image:</label>
                                         <input type="file" id="display_image" name="display_image" accept="image/*">
-                                        <img id="current_display_image" src="" alt="Current Display Image" style="width:200px; height:200px; border: solid 1px black;">
+                                        <img id="current_display_image" src="" alt="Current Display Image">
                                     </div>
                                     <div>
                                         <label for="reading_material_pdf">PDF File:</label>
@@ -231,35 +282,33 @@
         </div>
     </div>
 
-
-
     <script>
-    var modal = document.getElementById("editModal");
-    var editForm = document.getElementById("editForm");
-    var btns = document.getElementsByClassName("edit-button");
-    var span = document.getElementsByClassName("close")[0];
+        var modal = document.getElementById("editModal");
+        var editForm = document.getElementById("editForm");
+        var btns = document.getElementsByClassName("edit-button");
+        var span = document.getElementsByClassName("close")[0];
 
-    Array.from(btns).forEach(function(btn) {
-        btn.onclick = function() {
-            modal.style.display = "block";
-            document.getElementById('lesson_title').value = this.getAttribute('data-lesson-title');
-            document.getElementById('current_display_image').src = '/storage/thumbnail/' + this.getAttribute('data-display-image');
-            document.getElementById('current_reading_material_pdf').href = '/storage/pdf/' + this.getAttribute('data-reading-material-pdf');
-            // Set the action attribute of the form dynamically
-            editForm.action = '{{ route("materials.update", ":material_id") }}'.replace(':material_id', this.getAttribute('data-id'));
-        }
-    });
+        Array.from(btns).forEach(function(btn) {
+            btn.onclick = function() {
+                modal.style.display = "block";
+                document.getElementById('lesson_title').value = this.getAttribute('data-lesson-title');
+                document.getElementById('current_display_image').src = '/storage/thumbnail/' + this.getAttribute('data-display-image');
+                document.getElementById('current_reading_material_pdf').href = '/storage/pdf/' + this.getAttribute('data-reading-material-pdf');
+                // Set the action attribute of the form dynamically
+                editForm.action = '{{ route("materials.update", ":material_id") }}'.replace(':material_id', this.getAttribute('data-id'));
+            }
+        });
 
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
+        span.onclick = function() {
             modal.style.display = "none";
         }
-    }
-</script>
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 
 </body>
 

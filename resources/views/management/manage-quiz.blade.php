@@ -121,6 +121,82 @@
                 padding: 8px;
             }
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-content form div {
+            margin-bottom: 15px;
+        }
+
+        .modal-content label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content textarea,
+        .modal-content select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .modal-content button[type="submit"] {
+            background-color: #35B0E2;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button[type="submit"]:hover {
+            background-color: #1b86b3;
+        }
     </style>
 </head>
 
@@ -163,51 +239,12 @@
                         <option value="choice_c">Choice C</option>
                         <option value="choice_d">Choice D</option>
                     </select>
-                    <span id="current_correct_answer"></span>
                 </div>
                 <button type="submit">Save Changes</button>
             </form>
         </div>
     </div>
 
-    <style>
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            margin-left: 120px;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgb(0, 0, 0);
-            background-color: rgba(0, 0, 0, 0.4);
-            padding-top: 60px;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 200px;
-        }
-
-        .close-button {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close-button:hover,
-        .close-button:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-    </style>
     <div class="content-container">
         <div class="main-content">
             <div class="welcome-message">
@@ -264,10 +301,7 @@
             document.getElementById('choice_d').value = question.choice_d;
             document.getElementById('correct_answer').value = question.correct_answer;
             document.getElementById('quizFor').value = quizFor;
-
-            
         }
-        
 
         var modal = document.getElementById('editModal');
         var span = document.getElementsByClassName('close-button')[0];

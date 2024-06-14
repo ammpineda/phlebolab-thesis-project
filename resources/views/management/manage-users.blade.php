@@ -159,6 +159,7 @@
                     <button class="add-button" onclick="toggleInstructorForm()" href="#instructor-form">+ Add Instructor</button>
                 </div>
                 @endif
+                <h2>List of Instructors</h2>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -272,7 +273,7 @@
                 @endif
 
 
-
+                <h2>List of Students</h2>
                 <div class="table-wrapper">
                     <table>
                         <thead>
