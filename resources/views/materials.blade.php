@@ -127,7 +127,8 @@
                 <h1>Reading Materials <i class="fas fa-book"></i></h1>
             </div>
             <div class="subtitle">
-                Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. Begin your learning journey by clicking on the respective chapters below.
+                Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. 
+                The reading materials presented are sourced from "The Complete Textbook of Phlebotomy" by Lynn B. Hoeltke. Begin your learning journey by clicking on the respective chapters below.
             </div>
 
             <div class="button-grid">
