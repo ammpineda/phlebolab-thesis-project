@@ -37,7 +37,8 @@ class ManagementController extends Controller
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
-            'type' => 'Instructor'
+            'type' => 'Instructor',
+            'is_active' => true,
         ]);
 
         // Save the instructor
@@ -56,6 +57,7 @@ class ManagementController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
+            'is_active' => true,
         ]);
 
         // Create a new student instance
@@ -119,6 +121,26 @@ class ManagementController extends Controller
             'email' => $request->input('email'),
             'password' => $request->input('password'),
         ]);
+
+        return redirect()->back()->with('success', 'User details updated successfully.');
+    }
+
+    public function updateAccountStatus($id)
+    {
+
+        $user = User::findOrFail($id);
+
+        if($user->is_active){
+            $user->update([
+                'is_active' => false
+            ]);
+
+        } else{
+            $user->update([
+                'is_active' => true
+            ]);
+        }
+        
 
         return redirect()->back()->with('success', 'User details updated successfully.');
     }

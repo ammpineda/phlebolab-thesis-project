@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'password' => 'password123', // Ensure you hash the password
             'type' => 'Admin',
+            'is_active' => true
         ]);
 
 

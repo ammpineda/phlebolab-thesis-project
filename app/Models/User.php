@@ -11,7 +11,7 @@ class User extends Model
 
     protected $table = 'users';
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'type'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'type', 'is_active'];
 
     public function summativeResult() {
         return $this->hasMany(SummativeResult::class, 'summative_results_user_id', 'id');

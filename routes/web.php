@@ -171,6 +171,8 @@ Route::post('/student/store', [ManagementController::class, 'addStudent'])->name
 
 Route::delete('/user/{id}', [ManagementController::class, 'destroy'])->name('user.delete');
 
+Route::put('/users/status/{id}', [ManagementController::class, 'updateAccountStatus'])->name('updateAccountStatus');
+
 Route::put('/users/{id}', [ManagementController::class, 'update'])->name('user.update');
 
 // Management page for reading materials

@@ -168,7 +168,7 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Password</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -185,16 +185,31 @@
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->password }}</td>
+                                <td>
+
+                                @if ($user->is_active)
+                                        Active
+                                    @elseif (!$user->is_active)
+                                        Disabled
+                                    @endif
+
+                                </td>
                                 <td>
                                     @if (session('is_instructor') && !session('is_admin'))
                                     <p style="color: red;">Read only</p>
-                                    @else
-                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
-                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline;">
+                                    @elseif($user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        @method('DELETE')
-                                        <button class="delete-button">Delete</button>
+                                        @method('PUT')
+                                        <button class="delete-button">Disable</button>
+                                    </form>
+                                    @elseif(!$user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="activate-button">Activate</button>
                                     </form>
                                     @endif
                                 </td>
@@ -282,11 +297,11 @@
                                 <th>First Name</th>
                                 <th>Last Name</th>
                                 <th>Email</th>
-                                <th>Password</th>
                                 <th>Lab 1 Completion</th>
                                 <th>Lab 2 Completion</th>
                                 <th>Lab 3 Completion</th>
                                 <th>Quiz Score</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -303,7 +318,6 @@
                                 <td>{{ $user->first_name }}</td>
                                 <td>{{ $user->last_name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->password }}</td>
                                 <td>
                                     @foreach ($lab_progress as $progress)
                                     @if ($progress->lab_progress_user_id == $user->id && $progress->first_lab_is_done == 1)
@@ -348,16 +362,30 @@
                                     <i class="fas fa-times"></i>
                                     @endif
                                 </td>
+                                <td>
+                                    @if ($user->is_active)
+                                        Active
+                                    @elseif (!$user->is_active)
+                                        Disabled
+                                    @endif
+                                </td>
 
                                 <td>
                                     @if (session('is_instructor') && !session('is_admin'))
                                     <p style="color: red;">Read only</p>
-                                    @else
+                                    @elseif($user->is_active)
                                     <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
-                                    <form action="{{ route('user.delete', $user->id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="delete-button">Delete</button>
+                                        <button class="delete-button">Disable</button>
+                                    </form>
+                                    @elseif(!$user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="activate-button">Activate</button>
                                     </form>
                                     @endif
                                 </td>

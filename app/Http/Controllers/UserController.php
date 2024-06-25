@@ -46,6 +46,7 @@ class UserController extends Controller
                     'email' => $request->input('email'),
                     'password' => $request->input('password'),
                     'type' => "Student",
+                    'is_active' => true,
                 ]);
 
 
@@ -103,7 +104,10 @@ class UserController extends Controller
             
                 if ($user) {
                     // Check the type of the user
-                    if ($user->type === 'Student') {
+                    if (!$user->is_active){
+                        return redirect()->back()->with('error', 'Your account is currently disabled. Please contact the system administrator.')->withInput();
+                    }
+                    elseif ($user->type === 'Student') {
                         Session::put('user_id', $user->id);
                         Session::put('is_student', true);
                         Session::put('is_admin', false);
