@@ -377,14 +377,14 @@
                                     <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        @method('DELETE')
+                                        @method('PUT')
                                         <button class="delete-button">Disable</button>
                                     </form>
                                     @elseif(!$user->is_active)
                                     <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
-                                        @method('DELETE')
+                                        @method('PUT')
                                         <button class="activate-button">Activate</button>
                                     </form>
                                     @endif
