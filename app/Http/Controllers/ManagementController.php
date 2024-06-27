@@ -57,7 +57,7 @@ class ManagementController extends Controller
             'last_name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
-            'is_active' => true,
+            
         ]);
 
         // Create a new student instance
@@ -66,7 +66,8 @@ class ManagementController extends Controller
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
             'password' => $request->input('password'),
-            'type' => 'Student'
+            'type' => 'Student',
+            'is_active' => true,
         ]);
 
         // automatically creates a record for progress tracking
