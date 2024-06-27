@@ -29,10 +29,7 @@
             box-sizing: border-box;
         }
 
-        h1,
-        th,
-        td,
-        button {
+        h1, th, td, button {
             color: var(--primary-color);
         }
 
@@ -68,12 +65,26 @@
             margin-left: 10px;
         }
 
-        .content-container {
+        .container {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: row;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            flex-shrink: 0;
+            background-color: #f8f9fa;
+            height: 100vh;
+            overflow-y: auto;
+            position: fixed;
+            z-index: 1;
+        }
+
+        .content-container {
+            flex-grow: 1;
+            margin-left: 250px;
             padding: 20px;
-            margin-top: 20px;
         }
 
         .button-bar {
@@ -100,12 +111,10 @@
         table {
             width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
             border-collapse: collapse;
         }
 
-        th,
-        td {
+        th, td {
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid #ddd;
@@ -125,6 +134,22 @@
             margin-bottom: -20px;
         }
 
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+            }
+
+            .content-container {
+                margin-left: 0;
+            }
+        }
+
         @media (max-width: 768px) {
             .button-bar {
                 flex-direction: column;
@@ -135,9 +160,54 @@
                 font-size: 14px;
             }
 
-            th,
-            td {
+            th, td {
                 padding: 8px;
+            }
+
+            .table-wrapper {
+                overflow-x: auto;
+            }
+
+            .table-wrapper table {
+                display: block;
+                width: 100%;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-message {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .table-wrapper table, .table-wrapper th, .table-wrapper td {
+                display: block;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .table-wrapper th, .table-wrapper td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            .table-wrapper th::before, .table-wrapper td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 50%;
+                padding-left: 15px;
+                font-weight: bold;
+                text-align: left;
+            }
+
+            .table-wrapper th {
+                background-color: var(--primary-color);
+                color: #fff;
+                padding-left: 0;
             }
         }
     </style>
@@ -152,14 +222,15 @@
             </div>
 
             <div class="content">
-                @if (session('is_instructor') && !session('is_admin'))
-                <p style="color: red;">This feature is not accessible to instructors.</p>
-                @else
-                <div class="button-bar">
-                    <button class="add-button" onclick="toggleInstructorForm()" href="#instructor-form">+ Add Instructor</button>
-                </div>
-                @endif
-                <h2>List of Instructors</h2>
+            @if (session('is_instructor') && !session('is_admin'))
+            <h2 style="display: inline-block; ">List of Instructors</h2>
+            <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
+            @else
+            <div class="button-bar">
+                <h2 style="display: inline-block; margin-left:-450px;">List of Instructors</h2>
+                <button class="add-button" onclick="toggleInstructorForm()" style="display: inline-block; margin-left: 10px;">+ Add Instructor</button>
+            </div>
+            @endif
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -198,14 +269,14 @@
                                     @if (session('is_instructor') && !session('is_admin'))
                                     <p style="color: red;">Read only</p>
                                     @elseif($user->is_active)
-                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('PUT')
                                         <button class="delete-button">Disable</button>
                                     </form>
                                     @elseif(!$user->is_active)
-                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('PUT')
@@ -279,16 +350,16 @@
 
 
             <div class="content">
-                @if (session('is_instructor') && !session('is_admin'))
-                <p style="color: red;">This feature is not accessible to instructors.</p>
-                @else
-                <div class="button-bar">
-                    <button class="add-button" onclick="toggleStudentForm()" href="#student-form">+ Add Student</button>
-                </div>
-                @endif
+            @if (session('is_instructor') && !session('is_admin'))
+            <h2 style="display: inline-block; ">List of Students</h2>
+            <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
+            @else
+            <div class="button-bar">
+                <h2 style="display: inline-block; margin-left:-450px;">List of Students</h2>
+                <button class="add-button" onclick="toggleStudentForm()" style="display: inline-block; margin-left: 10px;">+ Add Student</button>
+            </div>
+            @endif
 
-
-                <h2>List of Students</h2>
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -408,7 +479,7 @@
                                         <input type="email" id="edit_email" name="email" value="{{ $user->email }}"><br>
 
                                         <label for="edit_password">Password:</label><br>
-                                        <input type="text" id="edit_password" name="password" value="{{ $user->password }}"><br>
+                                        <input type="password" id="edit_password" name="password" value="{{ $user->password }}"><br>
 
                                         <button type="submit">Update</button>
                                         <button type="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Cancel</button>
