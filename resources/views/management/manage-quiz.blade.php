@@ -61,6 +61,8 @@
             align-items: center;
             padding: 20px;
             margin-top: 20px;
+            margin-left: 250px; /* Adjusted margin to accommodate sidebar */
+            width: calc(100% - 250px); /* Adjusted width to accommodate sidebar */
         }
 
         .add-button {
@@ -75,7 +77,7 @@
 
         .table-wrapper {
             width: 100%;
-            overflow-x: auto;
+            overflow-x: auto; /* Enable horizontal scrolling for tables on small screens */
         }
 
         table {
@@ -107,9 +109,13 @@
         }
 
         @media (max-width: 768px) {
-            .button-bar {
-                flex-direction: column;
-                align-items: center;
+            .content-container {
+                margin-left: 0; /* Adjusted for small screens */
+                width: 100%; /* Adjusted for small screens */
+            }
+
+            .table-wrapper {
+                overflow-x: auto; /* Ensure tables are scrollable on small screens */
             }
 
             table {

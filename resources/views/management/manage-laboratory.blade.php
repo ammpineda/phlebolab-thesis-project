@@ -1,14 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>PhleboLab | Manage Laboratory</title>
-
     <link rel="icon" href="assets/images/favicon.ico.png" type="image/x-icon">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
@@ -18,9 +14,7 @@
         :root {
             --primary-color: #25396d;
         }
-
         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
-
         body {
             background-color: whitesmoke;
             font-family: "Roboto", sans-serif;
@@ -28,20 +22,17 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         h1,
         th,
         td,
         button {
             color: var(--primary-color);
         }
-
         a {
             color: var(--primary-color);
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
-
         button {
             background-color: #35B0E2;
             color: white;
@@ -54,7 +45,6 @@
             transition: background-color 0.3s;
             margin-left: 10px;
         }
-
         .delete-button {
             background-color: red;
             color: white;
@@ -67,166 +57,98 @@
             transition: background-color 0.3s;
             margin-left: 10px;
         }
-
         .content-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            margin-left: 250px; /* Adjust margin to accommodate sidebar */
             padding: 20px;
-            margin-top: 20px;
         }
-
         .table-wrapper {
             width: 100%;
             overflow-x: auto;
         }
-
         table {
             width: 100%;
             max-width: 1200px;
-            margin: 0 auto;
+            
             border-collapse: collapse;
         }
-
         th,
         td {
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
-
         th {
             background-color: var(--primary-color);
             color: #fff;
         }
-
         tbody tr:nth-child(even) {
             background-color: #f2f2f2;
         }
-
         .welcome-message {
             font-size: 36px;
             margin-bottom: -20px;
         }
-
         .pdf-iframe {
             width: 100%;
             height: 600px;
             border: none;
         }
-
         @media (max-width: 768px) {
-            .button-bar {
-                flex-direction: column;
-                align-items: center;
+            .content-container {
+                padding: 20px;
             }
-
             table {
                 font-size: 14px;
             }
-
             th,
             td {
                 padding: 8px;
             }
-
-            .collapsible {
-                background-color: #777;
-                color: white;
-                cursor: pointer;
-                padding: 18px;
-                width: 100%;
-                border: none;
-                text-align: left;
-                outline: none;
-                font-size: 15px;
-            }
-
-            .content {
-                padding: 0 18px;
-                display: none;
-                overflow: hidden;
-                background-color: #f1f1f1;
-            }
         }
-
+        /* Adjusted sidebar width */
+        .sidebar {
+            width: 200px; /* Adjust this width as needed */
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #25396d;
+            padding-top: 20px;
+        }
+        /* Adjusted modal position */
         .modal {
             display: none;
             position: fixed;
             z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
+            left: 50%; /* Adjust as needed */
+            top: 50%; /* Adjust as needed */
+            transform: translate(-50%, -50%);
+            width: 400px; /* Adjust width as needed */
+            max-width: 90%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
         }
-
         .modal-content {
             background-color: #fefefe;
-            margin: 10% auto;
+            margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: 8px;
+            width: 200px;
         }
-
         .close-button {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-
         .close-button:hover,
         .close-button:focus {
             color: black;
             text-decoration: none;
             cursor: pointer;
         }
-
-        .modal-content form {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-content form div {
-            margin-bottom: 15px;
-        }
-
-        .modal-content label {
-            font-weight: bold;
-            margin-bottom: 5px;
-            display: block;
-        }
-
-        .modal-content input[type="text"],
-        .modal-content textarea,
-        .modal-content select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-
-        .modal-content button[type="submit"] {
-            background-color: #35B0E2;
-            color: white;
-            border: none;
-            padding: 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .modal-content button[type="submit"]:hover {
-            background-color: #1b86b3;
-        }
     </style>
 </head>
-
 <body>
     @include('management/admin-sidebar')
 
@@ -267,13 +189,10 @@
             <div class="welcome-message">
                 <h2>Manage Laboratory</h2>
             </div>
-            <button type="button" class="collapsible">Manage Lab Exercise 1</button>
             <div class="content">
                 <br>
-                <h1>Equipment Familiarization</h1>
-                <br>
-                <br>
                 <div class="table-wrapper">
+                <h1>Equipment Familiarization</h1>
                     <table>
                         <thead>
                             <tr>
@@ -305,14 +224,13 @@
                 </div>
             </div>
             <br>
-            <br>
-            <button type="button" class="collapsible">Manage Lab Exercise 2</button>
             <div class="content">
                 <br>
-                <h1>Patient Identification</h1>
+                
                 <br>
                 <br>
                 <div class="table-wrapper">
+                <h1>Patient Identification</h1>
                     <table>
                         <thead>
                             <tr>
@@ -344,14 +262,13 @@
                 </div>
             </div>
             <br>
-            <br>
-            <button type="button" class="collapsible">Manage Lab Exercise 3</button>
             <div class="content">
                 <br>
-                <h1>Venipuncture Using Syringe</h1>
+                
                 <br>
                 <br>
                 <div class="table-wrapper">
+                <h1>Venipuncture Using Syringe</h1>
                     <table>
                         <thead>
                             <tr>
@@ -409,29 +326,5 @@
             }
         }
     </script>
-
-    <script>
-        const questions = <?php echo json_encode($questions); ?>;
-        console.log(questions);
-        var coll = document.getElementsByClassName("collapsible");
-        var i;
-
-        for (i = 0; i < coll.length; i++) {
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (content.style.display === "block") {
-                    content.style.display = "none";
-                } else {
-                    content.style.display = "block";
-                }
-            });
-        }
-        var contents = document.querySelectorAll('.content');
-        contents.forEach(function(content) {
-            content.style.display = "none";
-        });
-    </script>
 </body>
-
 </html>
