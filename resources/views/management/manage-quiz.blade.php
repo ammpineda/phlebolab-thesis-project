@@ -60,7 +60,6 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            margin-top: 20px;
             margin-left: 250px; /* Adjusted margin to accommodate sidebar */
             width: calc(100% - 250px); /* Adjusted width to accommodate sidebar */
         }
@@ -212,7 +211,7 @@
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <form id="editForm" method="POST" action="{{ route('questions.update') }}">
+            <form id="editForm" method="POST" action="{{ route('cdquestions.update') }}">
                 @csrf
                 @method('PUT')
                 <input type="hidden" name="id" id="questionId">

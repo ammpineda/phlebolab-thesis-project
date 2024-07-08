@@ -224,6 +224,36 @@ class ManagementController extends Controller
         return redirect()->back()->with('success', 'Question updated successfully');
     }
 
+    public function updateQuestionWithCD(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|integer',
+            'question' => 'required|string',
+            'choice_a' => 'required|string',
+            'choice_b' => 'required|string',
+            'choice_c' => 'required|string',
+            'choice_d' => 'required|string',
+            'correct_answer' => 'required|string|in:choice_a,choice_b,choice_c,choice_d',
+            'quiz_for' => 'required|string'
+        ]);
+
+        $question = QuizQuestions::findOrFail($request->id);
+        $question->question = $request->question;
+        $question->choice_a = $request->choice_a;
+        $question->choice_b = $request->choice_b;
+        $question->choice_c = $request->choice_c;
+        $question->choice_d = $request->choice_d;
+
+        // Set the correct answer based on the selected option
+        $question->correct_answer = $request->input($request->correct_answer);
+
+        $question->quiz_for = $request->quiz_for;
+        $question->save();
+
+        return redirect()->back()->with('success', 'Question updated successfully');
+    }
+
+
     public function displayManagementQuiz()
     {
         $questions = QuizQuestions::where('quiz_for', 'lab_4')

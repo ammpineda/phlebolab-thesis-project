@@ -14,6 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
     <!-- Styles -->
+
     <style>
         :root {
             --primary-color: #25396d;
@@ -134,6 +135,54 @@
             margin-bottom: -20px;
         }
 
+        .modal-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    z-index: 1000;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    max-width: 90%;
+    width: 250px; /* Adjust width as needed */
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    background-color: #ccc;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 50%;
+}
+
+.modal-close-btn:hover {
+    background-color: #aaa;
+}
+
+.modal h2 {
+    margin-top: 0;
+}
+
         @media (max-width: 1024px) {
             .container {
                 flex-direction: column;
@@ -217,6 +266,8 @@
     @include('management/admin-sidebar')
     <div class="content-container">
         <div class="main-content">
+
+        <div class="modal-backdrop"></div>
             <div class="welcome-message">
                 <h2>Manage Users</h2>
             </div>
@@ -325,7 +376,8 @@
 
 
             <!-- Instructor Form -->
-            <div id="instructor-form" style="display: none;">
+            <div id="instructor-form" class="modal" style="display: none;">
+            <button class="modal-close-btn" onclick="closeModal('instructor-form')">X</button>
                 <h2>Add Instructor</h2>
                 <form action="{{ route('instructor.store') }}" method="POST">
                     @csrf
@@ -498,7 +550,8 @@
                 </div>
             </div>
             <!-- Student Form -->
-            <div id="student-form" style="display: none;">
+            <div id="student-form" class="modal" style="display: none;">
+            <button class="modal-close-btn" onclick="closeModal('student-form')">X</button>
                 <h2>Add Student</h2>
                 <form action="{{ route('student.store') }}" method="POST">
                     @csrf
@@ -531,26 +584,26 @@
         }
 
         function toggleInstructorForm() {
-            var form = document.getElementById("instructor-form");
-            var studentForm = document.getElementById("student-form");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-                studentForm.style.display = "none"; // Hide student form if visible
-            } else {
-                form.style.display = "none";
-            }
-        }
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    var modal = document.querySelector('#instructor-form.modal');
+    modalBackdrop.style.display = 'block';
+    modal.style.display = 'block';
+}
 
-        function toggleStudentForm() {
-            var form = document.getElementById("student-form");
-            var instructorForm = document.getElementById("instructor-form");
-            if (form.style.display === "none") {
-                form.style.display = "block";
-                instructorForm.style.display = "none"; // Hide instructor form if visible
-            } else {
-                form.style.display = "none";
-            }
-        }
+function toggleStudentForm() {
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    var modal = document.querySelector('#student-form.modal');
+    modalBackdrop.style.display = 'block';
+    modal.style.display = 'block';
+}
+
+function closeModal(modalId) {
+    var modalBackdrop = document.querySelector('.modal-backdrop');
+    var modal = document.getElementById(modalId);
+    modalBackdrop.style.display = 'none';
+    modal.style.display = 'none';
+}
+
     </script>
 </body>
 

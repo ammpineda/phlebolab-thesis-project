@@ -68,7 +68,6 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            margin-top: 20px;
         }
 
         .add-button {
@@ -128,6 +127,24 @@
             td {
                 padding: 8px;
             }
+
+            .content-container {
+        padding: 10px;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+    }
+
+    table {
+        min-width: 600px; /* Ensure table doesn't collapse too much */
+    }
+
+    .modal-content {
+        width: 90%; /* Adjust modal width for smaller screens */
+        max-width: 90%; /* Adjust modal max-width for smaller screens */
+        margin: 10% auto;
+    }
         }
 
         .modal {

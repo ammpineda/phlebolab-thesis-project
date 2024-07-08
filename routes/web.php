@@ -191,6 +191,9 @@ Route::get('/management/laboratory',
 
 Route::put('/questions/update', [ManagementController::class, 'updateQuestion'])->name('questions.update');
 
+Route::put('/questionscd/update', [ManagementController::class, 'updateQuestionWithCD'])->name('cdquestions.update');
+
+
 Route::get('/management/quiz', 
     [ManagementController::class, 'displayManagementQuiz']
 )->name('management-quiz');

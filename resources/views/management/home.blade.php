@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +16,7 @@
     <!-- Styles -->
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
         body {
             background-color: whitesmoke;
             font-family: "Roboto", sans-serif;
@@ -22,7 +24,7 @@
         }
 
         .main-content {
-            display:flex;
+            display: flex;
         }
 
         .container {
@@ -31,19 +33,19 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
         }
 
         .content {
-            margin: 30px; 
+            margin: 30px;
             text-align: center;
-            flex: 1; 
-            max-width: 100%; 
+            flex: 1;
+            max-width: 100%;
         }
 
         .welcome-message {
             font-size: 36px;
-            margin-bottom: -20px; 
+            margin-bottom: -20px;
         }
 
         .subtitle {
@@ -61,20 +63,20 @@
 
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 columns with equal width */
             gap: 20px;
-            
+            /* Adjust as needed for spacing between buttons */
         }
 
         .button-container {
             text-align: center;
             border-radius: 10px;
-            padding: 20px;
-            padding-bottom: 10px;
+            padding: 30px;
+            /* Increased padding for larger buttons */
             background-color: #25396d;
             color: #fff;
             transition: transform 0.3s, box-shadow 0.3s;
-            
         }
 
         .button-container a {
@@ -92,83 +94,95 @@
             font-size: 2em;
         }
 
+
         @keyframes fadeIn {
             from {
-                opacity: 0; 
+                opacity: 0;
             }
+
             to {
-                opacity: 1; 
+                opacity: 1;
             }
-        }        
+        }
 
         @media screen and (max-width: 768px) {
 
-            .slideshow-container{
+            .slideshow-container {
                 display: none;
             }
 
             .main-content {
-                flex-direction: column; 
+                flex-direction: column;
                 margin-left: 0;
             }
 
             .container {
-                margin-left: 0; 
+                margin-left: 0;
             }
         }
     </style>
 </head>
+
 <body>
-@include('management/admin-sidebar')  
+    @include('management/admin-sidebar')
     <div class="main-content">
-    
-    <div class="container">
-        <div class="content">
-            <div class="welcome-message">
-                <h1>Welcome, {{ $user->first_name }} </h1>
+
+        <div class="container">
+            <div class="content">
+                <div class="welcome-message">
+                    <h1>Welcome, {{ $user->first_name }} </h1>
+                </div>
+                <div class="subtitle">
+                    This is the admin side of PhleboLab. You can manage the users, materials, laboratory exercises, and quiz shown in the student side of the web application.
+                </div>
+
+                <div class="button-grid">
+                    <a href="{{ route('management-users') }}">
+                        <div class="button-container">
+
+                            <i class="fas fa-pen"></i>
+                            <p>Manage Users</p>
+
+                        </div>
+                    </a>
+
+                    <a href="{{ route('management-materials') }}">
+                        <div class="button-container">
+
+                            <i class="fas fa-book"></i>
+                            <p>Manage Materials</p>
+
+                        </div>
+                    </a>
+
+                    <a href="{{ route('management-laboratory') }}">
+                        <div class="button-container">
+
+                            <i class="fas fa-flask"></i>
+                            <p>Manage 2D Laboratory</p>
+
+                        </div>
+                    </a>
+
+                    <a href="{{ route('management-quiz') }}">
+                        <div class="button-container">
+
+                            <i class="fas fa-file-alt"></i>
+                            <p>Manage Quiz</p>
+
+                        </div>
+                    </a>
+
+                </div>
             </div>
-            <div class="subtitle">
-           This is the admin side of PhleboLab. You can manage the users, materials, laboratory exercises, and quiz shown in the student side of the web application.
-            </div>
 
-            <div class="button-grid">
-            <a href="{{ route('management-users') }}"><div class="button-container">
-                
-                    <i class="fas fa-pen"></i>
-                    <p>Manage Users</p>
-                
-            </div></a>
 
-            <a href="{{ route('management-materials') }}"><div class="button-container">
-                
-                    <i class="fas fa-book"></i>
-                    <p>Manage Materials</p>
-                
-            </div></a>
 
-            <a href="{{ route('management-laboratory') }}"><div class="button-container">
-                
-                <i class="fas fa-flask"></i>
-                <p>Manage 2D Laboratory</p>
-            
-            </div></a>
 
-            <a href="{{ route('management-quiz') }}"><div class="button-container">
-                
-                    <i class="fas fa-file-alt"></i>
-                    <p>Manage Quiz</p>
-                
-            </div></a>
-
-            </div>
         </div>
-
-        
-
-        
-    </div>
     </div>
 
 
 </body>
+
 </html>
