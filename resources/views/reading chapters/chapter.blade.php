@@ -85,7 +85,7 @@
         <div class="container">
             <div class="content">
                 <div class="welcome-message">
-                    <h2>Chapter {{ $readingMaterial->lesson_title }}</h2>
+                    <h2>{{ $readingMaterial->lesson_title }}</h2>
                 </div>
                 <div class="subtitle">
                  <!-- Insert description here     -->

@@ -99,17 +99,25 @@
                     Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. The reading materials presented are sourced from "The Complete Textbook of Phlebotomy" by Lynn B. Hoeltke. Begin your learning journey by clicking on the respective chapters below.
                 </div>
                 <div class="button-grid">
-                @foreach ($readingMaterials as $material)
-                    <div class="button-container">
-                        <p><strong>Chapter {{ $loop->iteration }}:</strong><br> {{ $material->title }}</p>
-                        <img src="{{ asset('storage/thumbnail/' . $material->display_image) }}" alt="{{ $material->title }} Thumbnail"><br>
-                        @if ($loop->first || $material->is_done)
-                        <a href="{{ route('chapter', ['chapter_number' => $material->id]) }}" class="open-button">Open</a>
-                        @else
-                        <a href="#" class="locked-button">Locked</a>
-                        @endif
-                    </div>
-                    @endforeach
+                @foreach ($readingMaterials as $index => $material)
+    <div class="button-container">
+        <p><strong>Chapter {{ $index + 1 }}:</strong><br> {{ $material->title }}</p>
+        <img src="{{ asset('storage/thumbnail/' . $material->display_image) }}" alt="{{ $material->title }} Thumbnail"><br>
+        
+        {{-- Check if it's the first chapter or current chapter is marked as done --}}
+        @if ($index === 0)
+            <a href="{{ route('chapter', ['chapter_number' => $material->id]) }}" class="open-button">Open</a>
+        @else
+            {{-- Check if the previous chapter is marked as done --}}
+            @if ($readingProgress[$index - 1]->is_done)
+                <a href="{{ route('chapter', ['chapter_number' => $material->id]) }}" class="open-button">Open</a>
+            @else
+                <a href="#" class="locked-button">Locked</a>
+            @endif
+        @endif
+    </div>
+@endforeach
+
                 </div>
             </div>
         </div>

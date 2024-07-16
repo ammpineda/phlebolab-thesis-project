@@ -15,7 +15,7 @@ class ReadingProgressController extends Controller
     public function retrieveReadingProgress() {
         $userId = session('user_id');
         
-        $readingProgress = ReadingProgress::where('user_id', $userId)->first();
+        $readingProgress = ReadingProgress::where('user_id', $userId)->get();
 
         $readingMaterials = ReadingMaterials::all();
     
@@ -62,7 +62,7 @@ class ReadingProgressController extends Controller
         // Redirect back to the reading materials page
         return redirect()->route('reading-materials');
     }
-    
+
     public function updateReadingProgress(Request $request, $chapterNumber)
     {
         $user = $request->user(); // Get current authenticated user
