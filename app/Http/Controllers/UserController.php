@@ -7,6 +7,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Session;
 
 use App\Http\Controllers\Controller;
+use App\Models\ReadingMaterials;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -28,62 +29,51 @@ class UserController extends Controller
     }
 
     public function register(Request $request)
-    {
-        try {
-            $request->validate([
-                'first_name' => 'required|string',
-                'last_name' => 'required|string',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required|min:8',
-                'confirm_password' => 'required',
+{
+    try {
+        $request->validate([
+            'first_name' => 'required|string',
+            'last_name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:8',
+            'confirm_password' => 'required',
+        ]);
+
+        if ($request->input('password') === $request->input('confirm_password')) {
+
+            // Get the total count of existing reading materials
+            $totalMaterials = ReadingMaterials::count();
+
+            $user = User::create([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'email' => $request->input('email'),
+                'password' => $request->input('password'),
+                'type' => "Student",
+                'is_active' => true,
             ]);
-            
-            if($request->input('password') === $request->input('confirm_password')){
 
-                $user = User::create([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'email' => $request->input('email'),
-                    'password' => $request->input('password'),
-                    'type' => "Student",
-                    'is_active' => true,
-                ]);
-
-
-                // automatically creates a record for progress tracking
+            // Automatically create reading progress based on the number of existing reading materials
+            for ($i = 1; $i <= $totalMaterials; $i++) {
                 $user->readingProgress()->create([
-                    'first_chapter_is_done' => false,
-                    'second_chapter_is_done' => false,
-                    'third_chapter_is_done' => false,
-                    'fourth_chapter_is_done' => false,
-                    'fifth_chapter_is_done' => false,
-                    'sixth_chapter_is_done' => false,
+                    'chapter_number' => $i,
+                    'is_done' => false,
                 ]);
-
-                $user->labProgress()->create([
-                    'first_lab_is_done' => false,
-                    'second_lab_is_done' => false,
-                    'third_lab_is_done' => false,
-                ]);
-
-                $user->summativeResult()->create([
-                    'score' => 0
-                ]);
-
-            } else {
-                return redirect()->back()->with('error', 'The password fields do not match.')->withInput();
             }
-            
-    
-            return redirect()->back()->with('success', 'Registration successful. You can now log in.');
-        } catch (ValidationException $e) {
-            return redirect()->back()->withErrors($e->errors())->withInput();
-        } catch (\Exception $e) {
-            $errors = new \Illuminate\Support\MessageBag(['error' => $e->getMessage()]);
-            return redirect()->back()->withErrors($errors)->withInput();
+
+        } else {
+            return redirect()->back()->with('error', 'The password fields do not match.')->withInput();
         }
 
+        return redirect()->back()->with('success', 'Registration successful. You can now log in.');
+    } catch (ValidationException $e) {
+        return redirect()->back()->withErrors($e->errors())->withInput();
+    } catch (\Exception $e) {
+        $errors = new \Illuminate\Support\MessageBag(['error' => $e->getMessage()]);
+        return redirect()->back()->withErrors($errors)->withInput();
     }
+}
+
 
     public function login(Request $request)
     {

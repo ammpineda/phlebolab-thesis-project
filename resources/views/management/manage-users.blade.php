@@ -30,7 +30,10 @@
             box-sizing: border-box;
         }
 
-        h1, th, td, button {
+        h1,
+        th,
+        td,
+        button {
             color: var(--primary-color);
         }
 
@@ -111,11 +114,12 @@
 
         table {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1500px;
             border-collapse: collapse;
         }
 
-        th, td {
+        th,
+        td {
             padding: 12px;
             text-align: center;
             border-bottom: 1px solid #ddd;
@@ -124,6 +128,10 @@
         th {
             background-color: var(--primary-color);
             color: #fff;
+        }
+
+        th {
+            width: 300px;
         }
 
         tbody tr:nth-child(even) {
@@ -136,52 +144,58 @@
         }
 
         .modal-backdrop {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    max-width: 90%;
-    width: 250px; /* Adjust width as needed */
-    max-height: 90%;
-    overflow-y: auto;
-}
+        .activate-button {
+            color: black;
+            background-color: cyan;
+        }
 
-.modal-close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    padding: 5px 10px;
-    background-color: #ccc;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    border-radius: 50%;
-}
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            max-width: 90%;
+            width: 250px;
+            /* Adjust width as needed */
+            max-height: 90%;
+            overflow-y: auto;
+        }
 
-.modal-close-btn:hover {
-    background-color: #aaa;
-}
+        .modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 5px 10px;
+            background-color: #ccc;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 50%;
+        }
 
-.modal h2 {
-    margin-top: 0;
-}
+        .modal-close-btn:hover {
+            background-color: #aaa;
+        }
+
+        .modal h2 {
+            margin-top: 0;
+        }
 
         @media (max-width: 1024px) {
             .container {
@@ -209,7 +223,8 @@
                 font-size: 14px;
             }
 
-            th, td {
+            th,
+            td {
                 padding: 8px;
             }
 
@@ -231,19 +246,23 @@
                 text-align: center;
             }
 
-            .table-wrapper table, .table-wrapper th, .table-wrapper td {
+            .table-wrapper table,
+            .table-wrapper th,
+            .table-wrapper td {
                 display: block;
                 width: 100%;
                 box-sizing: border-box;
             }
 
-            .table-wrapper th, .table-wrapper td {
+            .table-wrapper th,
+            .table-wrapper td {
                 text-align: right;
                 padding-left: 50%;
                 position: relative;
             }
 
-            .table-wrapper th::before, .table-wrapper td::before {
+            .table-wrapper th::before,
+            .table-wrapper td::before {
                 content: attr(data-label);
                 position: absolute;
                 left: 0;
@@ -259,6 +278,10 @@
                 padding-left: 0;
             }
         }
+
+        .archive-button {
+            background-color: pink;
+        }
     </style>
 </head>
 
@@ -267,21 +290,21 @@
     <div class="content-container">
         <div class="main-content">
 
-        <div class="modal-backdrop"></div>
+            <div class="modal-backdrop"></div>
             <div class="welcome-message">
                 <h2>Manage Users</h2>
             </div>
 
             <div class="content">
-            @if (session('is_instructor') && !session('is_admin'))
-            <h2 style="display: inline-block; ">List of Instructors</h2>
-            <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
-            @else
-            <div class="button-bar">
-                <h2 style="display: inline-block; margin-left:-450px;">List of Instructors</h2>
-                <button class="add-button" onclick="toggleInstructorForm()" style="display: inline-block; margin-left: 10px;">+ Add Instructor</button>
-            </div>
-            @endif
+                @if (session('is_instructor') && !session('is_admin'))
+                <h2 style="display: inline-block; ">List of Active Instructors</h2>
+                <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
+                @else
+                <div class="button-bar">
+                    <h2 style="display: inline-block; margin-left:-450px;">List of Active Instructors</h2>
+                    <button class="add-button" onclick="toggleInstructorForm()" style="display: inline-block; margin-left: 10px;">+ Add Instructor</button>
+                </div>
+                @endif
                 <div class="table-wrapper">
                     <table>
                         <thead>
@@ -300,7 +323,7 @@
                             $hasInstructors = false;
                             @endphp
                             @foreach ($users as $user)
-                            @if ($user->type == 'Instructor')
+                            @if ($user->type == 'Instructor' && $user->is_active == 1 && $user->is_archived == 0)
                             @php $hasInstructors = true; @endphp
                             <tr>
                                 <td>{{ $instructorIndex++ }}</td>
@@ -309,10 +332,10 @@
                                 <td>{{ $user->email }}</td>
                                 <td>
 
-                                @if ($user->is_active)
-                                        Active
+                                    @if ($user->is_active)
+                                    Active
                                     @elseif (!$user->is_active)
-                                        Disabled
+                                    Disabled
                                     @endif
 
                                 </td>
@@ -326,12 +349,20 @@
                                         @method('PUT')
                                         <button class="delete-button">Disable</button>
                                     </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
+                                    </form>
                                     @elseif(!$user->is_active)
                                     <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('PUT')
                                         <button class="activate-button">Activate</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
                                     </form>
                                     @endif
                                 </td>
@@ -377,7 +408,7 @@
 
             <!-- Instructor Form -->
             <div id="instructor-form" class="modal" style="display: none;">
-            <button class="modal-close-btn" onclick="closeModal('instructor-form')">X</button>
+                <button class="modal-close-btn" onclick="closeModal('instructor-form')">X</button>
                 <h2>Add Instructor</h2>
                 <form action="{{ route('instructor.store') }}" method="POST">
                     @csrf
@@ -397,20 +428,101 @@
                 </form>
             </div>
 
-            <br>
-            <br>
-
 
             <div class="content">
-            @if (session('is_instructor') && !session('is_admin'))
-            <h2 style="display: inline-block; ">List of Students</h2>
-            <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
-            @else
-            <div class="button-bar">
-                <h2 style="display: inline-block; margin-left:-450px;">List of Students</h2>
-                <button class="add-button" onclick="toggleStudentForm()" style="display: inline-block; margin-left: 10px;">+ Add Student</button>
+                <h2>List of Disabled Instructors</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $disabledInstructorIndex = 1;
+                            $hasDisabledInstructors = false;
+                            @endphp
+                            @foreach ($users as $user)
+                            @if ($user->type == 'Instructor' && $user->is_active == 0 && $user->is_archived == 0)
+                            @php $hasDisabledInstructors = true; @endphp
+                            <tr>
+                                <td>{{ $disabledInstructorIndex++ }}</td>
+                                <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->last_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>Disabled</td>
+                                <td>
+                                    @if (session('is_instructor') && !session('is_admin'))
+                                    <p style="color: red;">Read only</p>
+                                    @else
+                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="activate-button">Activate</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
+                            <!-- Edit Instructor Form -->
+                            <tr id="edit-instructor-form-{{ $user->id }}" style="display: none;">
+                                <td colspan="6">
+                                    <form action="{{ route('user.update', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <label for="edit_first_name">First Name:</label><br>
+                                        <input type="text" id="edit_first_name" name="first_name" value="{{ $user->first_name }}"><br>
+
+                                        <label for="edit_last_name">Last Name:</label><br>
+                                        <input type="text" id="edit_last_name" name="last_name" value="{{ $user->last_name }}"><br>
+
+                                        <label for="edit_email">Email:</label><br>
+                                        <input type="email" id="edit_email" name="email" value="{{ $user->email }}"><br>
+
+                                        <label for="edit_password">Password:</label><br>
+                                        <input type="password" id="edit_password" name="password" value="{{ $user->password }}"><br>
+
+                                        <button type="submit">Update</button>
+                                        <button type="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endif
+                            @endforeach
+                            @if (!$hasDisabledInstructors)
+                            <tr>
+                                <td colspan="6">There are no disabled instructors.</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            @endif
+
+            <br>
+            <br>
+            <br>
+
+            <div class="content">
+                @if (session('is_instructor') && !session('is_admin'))
+                <h2 style="display: inline-block; ">List of Active Students</h2>
+                <p style="color: red; display: inline-block;">The 'add' feature is not accessible to instructors.</p>
+                @else
+                <div class="button-bar">
+                    <h2 style="display: inline-block; margin-left:-450px;">List of Active Students</h2>
+                    <button class="add-button" onclick="toggleStudentForm()" style="display: inline-block; margin-left: 10px;">+ Add Student</button>
+                </div>
+                @endif
 
                 <div class="table-wrapper">
                     <table>
@@ -434,7 +546,7 @@
                             $hasStudents = false;
                             @endphp
                             @foreach ($users as $user)
-                            @if ($user->type == 'Student')
+                            @if ($user->type == 'Student' && $user->is_active == 1 && $user->is_archived == 0)
                             @php $hasStudents = true; @endphp
                             <tr>
                                 <td>{{ $studentIndex++ }}</td>
@@ -487,9 +599,9 @@
                                 </td>
                                 <td>
                                     @if ($user->is_active)
-                                        Active
+                                    Active
                                     @elseif (!$user->is_active)
-                                        Disabled
+                                    Disabled
                                     @endif
                                 </td>
 
@@ -503,12 +615,20 @@
                                         @method('PUT')
                                         <button class="delete-button">Disable</button>
                                     </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
+                                    </form>
                                     @elseif(!$user->is_active)
                                     <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
                                     <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
                                         @csrf
                                         @method('PUT')
                                         <button class="activate-button">Activate</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
                                     </form>
                                     @endif
                                 </td>
@@ -551,7 +671,7 @@
             </div>
             <!-- Student Form -->
             <div id="student-form" class="modal" style="display: none;">
-            <button class="modal-close-btn" onclick="closeModal('student-form')">X</button>
+                <button class="modal-close-btn" onclick="closeModal('student-form')">X</button>
                 <h2>Add Student</h2>
                 <form action="{{ route('student.store') }}" method="POST">
                     @csrf
@@ -571,8 +691,270 @@
                 </form>
             </div>
 
+            <!-- List of Disabled Students -->
+            <div class="content">
+                <h2>List of Disabled Students</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Lab 1 Completion</th>
+                                <th>Lab 2 Completion</th>
+                                <th>Lab 3 Completion</th>
+                                <th>Quiz Score</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $studentIndex = 1;
+                            $hasStudents = false;
+                            @endphp
+                            @foreach ($users as $user)
+                            @if ($user->type == 'Student' && $user->is_active == 0 && $user->is_archived == 0)
+                            @php $hasStudents = true; @endphp
+                            <tr>
+                                <td>{{ $studentIndex++ }}</td>
+                                <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->last_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>
+                                    @foreach ($lab_progress as $progress)
+                                    @if ($progress->lab_progress_user_id == $user->id && $progress->first_lab_is_done == 1)
+                                    <i class="fas fa-check"></i>
+                                    @break
+                                    @endif
+                                    @endforeach
+                                    @if (!isset($progress) || $progress->lab_progress_user_id != $user->id || $progress->first_lab_is_done == 0)
+                                    <i class="fas fa-times"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @foreach ($lab_progress as $progress)
+                                    @if ($progress->lab_progress_user_id == $user->id && $progress->second_lab_is_done == 1)
+                                    <i class="fas fa-check"></i>
+                                    @break
+                                    @endif
+                                    @endforeach
+                                    @if (!isset($progress) || $progress->lab_progress_user_id != $user->id || $progress->second_lab_is_done == 0)
+                                    <i class="fas fa-times"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @foreach ($lab_progress as $progress)
+                                    @if ($progress->lab_progress_user_id == $user->id && $progress->third_lab_is_done == 1)
+                                    <i class="fas fa-check"></i>
+                                    @break
+                                    @endif
+                                    @endforeach
+                                    @if (!isset($progress) || $progress->lab_progress_user_id != $user->id || $progress->third_lab_is_done == 0)
+                                    <i class="fas fa-times"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @foreach ($summative_results as $result)
+                                    @if ($result->summative_results_user_id == $user->id && $result->score > 0)
+                                    {{ $result->score }}
+                                    @break
+                                    @endif
+                                    @endforeach
+                                    @if (!isset($result) || $result->summative_results_user_id != $user->id || !$result->score && $result->score == 0)
+                                    <i class="fas fa-times"></i>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($user->is_active)
+                                    Active
+                                    @elseif (!$user->is_active)
+                                    Disabled
+                                    @endif
+                                </td>
+
+                                <td>
+                                    @if (session('is_instructor') && !session('is_admin'))
+                                    <p style="color: red;">Read only</p>
+                                    @elseif($user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="delete-button">Disable</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
+                                    </form>
+                                    @elseif(!$user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="activate-button">Activate</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button">Archive</button>
+                                    </form>
+                                    @endif
+                                </td>
+
+                            </tr>
+
+                            <!-- Edit User Form -->
+                            <tr id="edit-student-form-{{ $user->id }}" style="display: none;">
+                                <td colspan="10">
+                                    <form action="{{ route('user.update', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <label for="edit_first_name">First Name:</label><br>
+                                        <input type="text" id="edit_first_name" name="first_name" value="{{ $user->first_name }}"><br>
+
+                                        <label for="edit_last_name">Last Name:</label><br>
+                                        <input type="text" id="edit_last_name" name="last_name" value="{{ $user->last_name }}"><br>
+
+                                        <label for="edit_email">Email:</label><br>
+                                        <input type="email" id="edit_email" name="email" value="{{ $user->email }}"><br>
+
+                                        <label for="edit_password">Password:</label><br>
+                                        <input type="password" id="edit_password" name="password" value="{{ $user->password }}"><br>
+
+                                        <button type="submit">Update</button>
+                                        <button type="button" onclick="toggleEditForm('edit-student-form-{{ $user->id }}')">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endif
+                            @endforeach
+                            @if (!$hasStudents)
+                            <tr>
+                                <td colspan="10">There are no disabled students.</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <br>
+            <br>
+            <br>
+
+            <div class="content">
+                <div class="button-bar">
+                    <h2 style="text-align:left; margin-left:-15px;">List of Archived Users</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Email</th>
+                                <th>Type</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $instructorIndex = 1;
+                            $hasInstructors = false;
+                            @endphp
+                            @foreach ($users as $user)
+                            @if ($user->is_archived == 1)
+                            @php $hasInstructors = true; @endphp
+                            <tr>
+                                <td>{{ $instructorIndex++ }}</td>
+                                <td>{{ $user->first_name }}</td>
+                                <td>{{ $user->last_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->type }}</td>
+                                <td>
+
+                                    @if ($user->is_active)
+                                    Active
+                                    @elseif (!$user->is_active)
+                                    Disabled
+                                    @endif
+
+                                </td>
+                                <td>
+                                    @if (session('is_instructor') && !session('is_admin'))
+                                    <p style="color: red;">Read only</p>
+                                    @elseif($user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="delete-button">Disable</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button" style="background-color:violet;">Unarchive</button>
+                                    </form>
+                                    @elseif(!$user->is_active)
+                                    <button class="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Edit</button>
+                                    <form action="{{ route('updateAccountStatus', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        @method('PUT')
+                                        <button class="activate-button">Activate</button>
+                                    </form>
+                                    <form action="{{ route('archiveUser', $user->id) }}" method="POST" style="display: inline;">
+                                        @csrf
+                                        <button class="archive-button" style="background-color:violet;">Unarchive</button>
+                                    </form>
+                                    @endif
+                                </td>
+                            </tr>
+
+                            <!-- Edit User Form -->
+                            <tr id="edit-instructor-form-{{ $user->id }}" style="display: none;">
+                                <td colspan="6">
+                                    <form action="{{ route('user.update', $user->id) }}" method="POST">
+                                        @csrf
+                                        @method('PUT')
+                                        <label for="edit_first_name">First Name:</label><br>
+                                        <input type="text" id="edit_first_name" name="first_name" value="{{ $user->first_name }}"><br>
+
+                                        <label for="edit_last_name">Last Name:</label><br>
+                                        <input type="text" id="edit_last_name" name="last_name" value="{{ $user->last_name }}"><br>
+
+                                        <label for="edit_email">Email:</label><br>
+                                        <input type="email" id="edit_email" name="email" value="{{ $user->email }}"><br>
+
+                                        <label for="edit_password">Password:</label><br>
+                                        <input type="password" id="edit_password" name="password" value="{{ $user->password }}"><br>
+
+                                        <button type="submit">Update</button>
+                                        <button type="button" onclick="toggleEditForm('edit-instructor-form-{{ $user->id }}')">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endif
+                            @endforeach
+                            @if (!$hasInstructors)
+                            <tr>
+                                <td colspan="6">There are no registered instructors.</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
         </div>
     </div>
+
+
+    <br>
+    <br>
     <script>
         function toggleEditForm(formId) {
             var form = document.getElementById(formId);
@@ -584,26 +966,25 @@
         }
 
         function toggleInstructorForm() {
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    var modal = document.querySelector('#instructor-form.modal');
-    modalBackdrop.style.display = 'block';
-    modal.style.display = 'block';
-}
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            var modal = document.querySelector('#instructor-form.modal');
+            modalBackdrop.style.display = 'block';
+            modal.style.display = 'block';
+        }
 
-function toggleStudentForm() {
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    var modal = document.querySelector('#student-form.modal');
-    modalBackdrop.style.display = 'block';
-    modal.style.display = 'block';
-}
+        function toggleStudentForm() {
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            var modal = document.querySelector('#student-form.modal');
+            modalBackdrop.style.display = 'block';
+            modal.style.display = 'block';
+        }
 
-function closeModal(modalId) {
-    var modalBackdrop = document.querySelector('.modal-backdrop');
-    var modal = document.getElementById(modalId);
-    modalBackdrop.style.display = 'none';
-    modal.style.display = 'none';
-}
-
+        function closeModal(modalId) {
+            var modalBackdrop = document.querySelector('.modal-backdrop');
+            var modal = document.getElementById(modalId);
+            modalBackdrop.style.display = 'none';
+            modal.style.display = 'none';
+        }
     </script>
 </body>
 

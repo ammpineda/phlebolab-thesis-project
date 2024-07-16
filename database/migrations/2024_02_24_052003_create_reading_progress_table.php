@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('reading_progress', function (Blueprint $table) {
+        Schema::create('reading_progresses', function (Blueprint $table) {
             $table->id();
-            $table->boolean('first_chapter_is_done');
-            $table->boolean('second_chapter_is_done');
-            $table->boolean('third_chapter_is_done');
-            $table->boolean('fourth_chapter_is_done');
-            $table->boolean('fifth_chapter_is_done');
-            $table->boolean('sixth_chapter_is_done');
-            $table->unsignedBigInteger('reading_progress_user_id');
-            $table->foreign('reading_progress_user_id')->references('id')->on('users');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->integer('chapter_number');
+            $table->boolean('is_done')->default(false);
             $table->timestamps();
+
+            $table->unique(['user_id', 'chapter_number']); // Ensure each user has unique progress per chapter
         });
     }
 

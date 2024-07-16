@@ -60,7 +60,7 @@
             flex-direction: column;
             align-items: center;
             padding: 20px;
-            margin-left: 250px; /* Adjusted margin to accommodate sidebar */
+            margin-left: 50px; /* Adjusted margin to accommodate sidebar */
             width: calc(100% - 250px); /* Adjusted width to accommodate sidebar */
         }
 
@@ -208,6 +208,46 @@
 <body>
     @include('management/admin-sidebar')
 
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeAddModal()">&times;</span>
+            <form id="addForm" method="POST" action="{{ route('cdquestions.store') }}">
+                @csrf
+                <input type="hidden" name="quiz_for" id="addQuizFor">
+                <div>
+                    <label for="addQuestion">Question:</label>
+                    <textarea id="addQuestion" name="question" required rows="4"></textarea>
+                </div>
+                <div>
+                    <label for="addChoiceA">Choice A:</label>
+                    <input type="text" id="addChoiceA" name="choice_a" required>
+                </div>
+                <div>
+                    <label for="addChoiceB">Choice B:</label>
+                    <input type="text" id="addChoiceB" name="choice_b" required>
+                </div>
+                <div>
+                    <label for="addChoiceC">Choice C:</label>
+                    <input type="text" id="addChoiceC" name="choice_c" required>
+                </div>
+                <div>
+                    <label for="addChoiceD">Choice D:</label>
+                    <input type="text" id="addChoiceD" name="choice_d" required>
+                </div>
+                <div>
+                    <label for="addCorrectAnswer">Correct Answer:</label>
+                    <select id="addCorrectAnswer" name="correct_answer" required>
+                        <option value="choice_a">Choice A</option>
+                        <option value="choice_b">Choice B</option>
+                        <option value="choice_c">Choice C</option>
+                        <option value="choice_d">Choice D</option>
+                    </select>
+                </div>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -254,6 +294,7 @@
         <div class="main-content">
             <div class="welcome-message">
                 <h2>Manage Quiz</h2>
+                <button type="button" class="add-button" onclick="openAddModal('lab_4')">Add Question</button>
             </div>
             <br>
             <div class="table-wrapper">
@@ -273,7 +314,6 @@
                     <tbody>
                         @foreach ($questions as $index => $question)
                         @if ($question->quiz_for === 'lab_4')
-
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $question->question }}</td>
@@ -283,7 +323,12 @@
                             <td>{{ $question->choice_d }}</td>
                             <td>{{ $question->correct_answer }}</td>
                             <td>
-                                <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_4')">Edit</button>
+                                <button type="button" onclick="openModal({{ json_encode($question) }}, 'lab_4')">Edit</button>
+                                <form action="{{ route('questions.destroy', $question->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="background-color:red;" onclick="return confirm('Are you sure you want to delete this question?')">Delete</button>
+                                </form>
                             </td>
                         </tr>
                         @endif
@@ -292,12 +337,23 @@
                 </table>
             </div>
         </div>
-
     </div>
 
     <script>
+        function openAddModal(quizFor) {
+            var modal = document.getElementById('addModal');
+            modal.style.display = 'block';
+            document.getElementById('addQuizFor').value = quizFor;
+        }
+
+        function closeAddModal() {
+            var modal = document.getElementById('addModal');
+            modal.style.display = 'none';
+        }
+
         function openModal(question, quizFor) {
-            document.getElementById('editModal').style.display = 'block';
+            var modal = document.getElementById('editModal');
+            modal.style.display = 'block';
             document.getElementById('questionId').value = question.id;
             document.getElementById('question').value = question.question;
             document.getElementById('choice_a').value = question.choice_a;
@@ -308,16 +364,25 @@
             document.getElementById('quizFor').value = quizFor;
         }
 
-        var modal = document.getElementById('editModal');
-        var span = document.getElementsByClassName('close-button')[0];
+        var editModal = document.getElementById('editModal');
+        var editSpan = document.getElementsByClassName('close-button')[1];
 
-        span.onclick = function() {
-            modal.style.display = 'none';
+        editSpan.onclick = function() {
+            editModal.style.display = 'none';
+        }
+
+        var addModal = document.getElementById('addModal');
+        var addSpan = document.getElementsByClassName('close-button')[0];
+
+        addSpan.onclick = function() {
+            addModal.style.display = 'none';
         }
 
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
+            if (event.target == addModal) {
+                addModal.style.display = 'none';
+            } else if (event.target == editModal) {
+                editModal.style.display = 'none';
             }
         }
     </script>

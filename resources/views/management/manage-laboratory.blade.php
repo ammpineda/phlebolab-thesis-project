@@ -68,7 +68,6 @@
         table {
             width: 100%;
             max-width: 1200px;
-            
             border-collapse: collapse;
         }
         th,
@@ -123,9 +122,7 @@
             left: 50%; /* Adjust as needed */
             top: 50%; /* Adjust as needed */
             transform: translate(-50%, -50%);
-            width: 400px; /* Adjust width as needed */
             max-width: 90%;
-            overflow: auto;
             padding-top: 60px;
         }
         .modal-content {
@@ -133,7 +130,8 @@
             margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 200px;
+            width: 100%;
+            max-width: 600px; /* Adjust width as needed */
         }
         .close-button {
             color: #aaa;
@@ -158,28 +156,58 @@
             <form id="editForm" method="POST" action="{{ route('questions.update') }}">
                 @csrf
                 @method('PUT')
-                <input type="hidden" name="id" id="questionId">
-                <input type="hidden" name="quiz_for" id="quizFor">
+                <input type="hidden" name="id" id="editQuestionId">
+                <input type="hidden" name="quiz_for" id="editQuizFor">
                 <div>
-                    <label for="question">Question:</label>
-                    <textarea id="question" name="question" required rows="4"></textarea>
+                    <label for="editQuestion">Question:</label>
+                    <textarea id="editQuestion" name="question" required rows="4"></textarea>
                 </div>
                 <div>
-                    <label for="choice_a">Choice A:</label>
-                    <input type="text" id="choice_a" name="choice_a" required>
+                    <label for="editChoiceA">Choice A:</label>
+                    <input type="text" id="editChoiceA" name="choice_a" required>
                 </div>
                 <div>
-                    <label for="choice_b">Choice B:</label>
-                    <input type="text" id="choice_b" name="choice_b" required>
+                    <label for="editChoiceB">Choice B:</label>
+                    <input type="text" id="editChoiceB" name="choice_b" required>
                 </div>
                 <div>
-                    <label for="correct_answer">Correct Answer:</label>
-                    <select id="correct_answer" name="correct_answer" required>
+                    <label for="editCorrectAnswer">Correct Answer:</label>
+                    <select id="editCorrectAnswer" name="correct_answer" required>
                         <option value="choice_a">Choice A</option>
                         <option value="choice_b">Choice B</option>
                     </select>
                 </div>
                 <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <form id="addForm" method="POST" action="{{ route('questions.store') }}">
+                @csrf
+                <input type="hidden" name="quiz_for" id="addQuizFor">
+                <div>
+                    <label for="addQuestion">Question:</label>
+                    <textarea id="addQuestion" name="question" required rows="4"></textarea>
+                </div>
+                <div>
+                    <label for="addChoiceA">Choice A:</label>
+                    <input type="text" id="addChoiceA" name="choice_a" required>
+                </div>
+                <div>
+                    <label for="addChoiceB">Choice B:</label>
+                    <input type="text" id="addChoiceB" name="choice_b" required>
+                </div>
+                <div>
+                    <label for="addCorrectAnswer">Correct Answer:</label>
+                    <select id="addCorrectAnswer" name="correct_answer" required>
+                        <option value="choice_a">Choice A</option>
+                        <option value="choice_b">Choice B</option>
+                    </select>
+                </div>
+                <button type="submit">Add Question</button>
             </form>
         </div>
     </div>
@@ -191,8 +219,10 @@
             </div>
             <div class="content">
                 <br>
+                <!-- Equipment Familiarization -->
                 <div class="table-wrapper">
-                <h1>Equipment Familiarization</h1>
+                    <h1>Equipment Familiarization</h1>
+                    <button type="button" class="button" style="background-color:green;" onclick="openModalAdd('lab_1')">Add Question</button>
                     <table>
                         <thead>
                             <tr>
@@ -206,95 +236,104 @@
                         </thead>
                         <tbody>
                             @foreach ($questions as $index => $question)
-                            @if ($question->quiz_for === 'lab_1')
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $question->question }}</td>
-                                <td>{{ $question->choice_a }}</td>
-                                <td>{{ $question->choice_b }}</td>
-                                <td>{{ $question->correct_answer }}</td>
-                                <td>
-                                    <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_1')">Edit</button>
-                                </td>
-                            </tr>
-                            @endif
+                                @if ($question->quiz_for === 'lab_1')
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question->question }}</td>
+                                    <td>{{ $question->choice_a }}</td>
+                                    <td>{{ $question->choice_b }}</td>
+                                    <td>{{ $question->correct_answer }}</td>
+                                    <td>
+                                        <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_1')">Edit</button>
+                                        <form action="{{ route('questions.destroy', $question->id) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this question?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <br>
-            <div class="content">
                 <br>
-                
-                <br>
-                <br>
-                <div class="table-wrapper">
-                <h1>Patient Identification</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question Number</th>
-                                <th>Question</th>
-                                <th>Choice 1</th>
-                                <th>Choice 2</th>
-                                <th>Correct Answer</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($questions as $index => $question)
-                            @if ($question->quiz_for === 'lab_2')
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $question->question }}</td>
-                                <td>{{ $question->choice_a }}</td>
-                                <td>{{ $question->choice_b }}</td>
-                                <td>{{ $question->correct_answer }}</td>
-                                <td>
-                                    <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_2')">Edit</button>
-                                </td>
-                            </tr>
-                            @endif
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <br>
-            <div class="content">
-                <br>
-                
-                <br>
-                <br>
-                <div class="table-wrapper">
-                <h1>Venipuncture Using Syringe</h1>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Question Number</th>
-                                <th>Question</th>
-                                <th>Choice 1</th>
-                                <th>Choice 2</th>
-                                <th>Correct Answer</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($questions as $index => $question)
-                            @if ($question->quiz_for === 'lab_3')
 
+                <!-- Patient Identification -->
+                <div class="table-wrapper">
+                    <h1>Patient Identification</h1>
+                    <button type="button" class="button" style="background-color:green;" onclick="openModalAdd('lab_2')">Add Question</button>
+                    <table>
+                        <thead>
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $question->question }}</td>
-                                <td>{{ $question->choice_a }}</td>
-                                <td>{{ $question->choice_b }}</td>
-                                <td>{{ $question->correct_answer }}</td>
-                                <td>
-                                    <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_3')">Edit</button>
-                                </td>
+                                <th>Question Number</th>
+                                <th>Question</th>
+                                <th>Choice 1</th>
+                                <th>Choice 2</th>
+                                <th>Correct Answer</th>
+                                <th>Actions</th>
                             </tr>
-                            @endif
+                        </thead>
+                        <tbody>
+                            @foreach ($questions as $index => $question)
+                                @if ($question->quiz_for === 'lab_2')
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question->question }}</td>
+                                    <td>{{ $question->choice_a }}</td>
+                                    <td>{{ $question->choice_b }}</td>
+                                    <td>{{ $question->correct_answer }}</td>
+                                    <td>
+                                        <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_2')">Edit</button>
+                                        <form action="{{ route('questions.destroy', $question->id) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this question?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endif
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+
+                <!-- Venipuncture Using Syringe -->
+                <div class="table-wrapper">
+                    
+                    <h1>Venipuncture Using Syringe</h1>
+                    <button type="button" class="button" style="background-color:green;" onclick="openModalAdd('lab_3')">Add Question</button>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Question Number</th>
+                                <th>Question</th>
+                                <th>Choice 1</th>
+                                <th>Choice 2</th>
+                                <th>Correct Answer</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($questions as $index => $question)
+                                @if ($question->quiz_for === 'lab_3')
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $question->question }}</td>
+                                    <td>{{ $question->choice_a }}</td>
+                                    <td>{{ $question->choice_b }}</td>
+                                    <td>{{ $question->correct_answer }}</td>
+                                    <td>
+                                        <button type="button" class="button" onclick="openModal({{ $question }}, 'lab_3')">Edit</button>
+                                        <form action="{{ route('questions.destroy', $question->id) }}" method="POST" style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this question?')">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>
@@ -302,29 +341,52 @@
             </div>
         </div>
     </div>
+
     <script>
         function openModal(question, quizFor) {
-            document.getElementById('editModal').style.display = 'block';
-            document.getElementById('questionId').value = question.id;
-            document.getElementById('question').value = question.question;
-            document.getElementById('choice_a').value = question.choice_a;
-            document.getElementById('choice_b').value = question.choice_b;
-            document.getElementById('correct_answer').value = question.correct_answer;
-            document.getElementById('quizFor').value = quizFor;
+            var modal = document.getElementById('editModal');
+            modal.style.display = 'block';
+
+            // Set values in edit modal
+            document.getElementById('editQuestionId').value = question.id;
+            document.getElementById('editQuestion').value = question.question;
+            document.getElementById('editChoiceA').value = question.choice_a;
+            document.getElementById('editChoiceB').value = question.choice_b;
+            document.getElementById('editCorrectAnswer').value = question.correct_answer;
+            document.getElementById('editQuizFor').value = quizFor;
         }
 
-        var modal = document.getElementById('editModal');
-        var span = document.getElementsByClassName('close-button')[0];
+        function openModalAdd(quizFor) {
+            var modal = document.getElementById('addModal');
+            modal.style.display = 'block';
 
-        span.onclick = function() {
-            modal.style.display = 'none';
+            // Clear previous form values if necessary
+            document.getElementById('addQuestion').value = '';
+            document.getElementById('addChoiceA').value = '';
+            document.getElementById('addChoiceB').value = '';
+            document.getElementById('addCorrectAnswer').value = 'choice_a'; // Default selection, change if needed
+            document.getElementById('addQuizFor').value = quizFor;
         }
+
+        var modals = document.querySelectorAll('.modal');
+        var spans = document.querySelectorAll('.close-button');
+
+        spans.forEach(function(span) {
+            span.onclick = function() {
+                modals.forEach(function(modal) {
+                    modal.style.display = 'none';
+                });
+            }
+        });
 
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-            }
+            modals.forEach(function(modal) {
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
         }
     </script>
+
 </body>
 </html>

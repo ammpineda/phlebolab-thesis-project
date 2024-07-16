@@ -28,6 +28,19 @@ class ReadingProgressController extends Controller
         return view('materials', compact('user', 'readingProgress', 'readingMaterials'));
     }
 
+    public function updateReadingProgress(Request $request, $chapterNumber)
+    {
+        $user = $request->user(); // Get current authenticated user
+
+        // Find or create reading progress for this user and chapter
+        $progress = ReadingProgress::updateOrCreate(
+            ['user_id' => $user->id, 'chapter_number' => $chapterNumber],
+            ['is_done' => $request->input('is_done', false)]
+        );
+
+        return response()->json(['message' => 'Reading progress updated successfully', 'progress' => $progress]);
+    }
+
 
     // Chapter 1
     public function toChapterOne() {

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('type');
             $table->boolean('is_active');
+            $table->boolean('is_archived');
             $table->timestamps();
         });
     }

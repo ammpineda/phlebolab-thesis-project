@@ -175,6 +175,9 @@ Route::put('/users/status/{id}', [ManagementController::class, 'updateAccountSta
 
 Route::put('/users/{id}', [ManagementController::class, 'update'])->name('user.update');
 
+Route::post('/archive-user/{user}', [ManagementController::class, 'archiveUser'])->name('archiveUser');
+
+
 // Management page for reading materials
 
 Route::get('/management/materials', 
@@ -182,6 +185,11 @@ Route::get('/management/materials',
 )->name('management-materials');
 
 Route::put('/management/materials/{id}', [ManagementController::class, 'updateMaterial'])->name('materials.update');
+
+Route::post('/management/materials/add', [ManagementController::class, 'storeMaterial'])->name('materials.store');
+
+Route::delete('/materials/{id}', [ManagementController::class, 'destroyMaterial'])->name('materials.destroy');
+
 
 // Management page for laboratory exercises and summative quiz
 
@@ -192,6 +200,12 @@ Route::get('/management/laboratory',
 Route::put('/questions/update', [ManagementController::class, 'updateQuestion'])->name('questions.update');
 
 Route::put('/questionscd/update', [ManagementController::class, 'updateQuestionWithCD'])->name('cdquestions.update');
+
+Route::delete('/questions/{id}', [ManagementController::class, 'deleteQuestion'])->name('questions.destroy');
+
+Route::post('/questions', [ManagementController::class, 'storeQuestion'])->name('questions.store');
+
+Route::post('/cdquestions', [ManagementController::class, 'storeQuestionWithCD'])->name('cdquestions.store');
 
 
 Route::get('/management/quiz', 

@@ -129,22 +129,25 @@
             }
 
             .content-container {
-        padding: 10px;
-    }
+                padding: 10px;
+            }
 
-    .table-wrapper {
-        overflow-x: scroll;
-    }
+            .table-wrapper {
+                overflow-x: scroll;
+            }
 
-    table {
-        min-width: 600px; /* Ensure table doesn't collapse too much */
-    }
+            table {
+                min-width: 600px;
+                /* Ensure table doesn't collapse too much */
+            }
 
-    .modal-content {
-        width: 90%; /* Adjust modal width for smaller screens */
-        max-width: 90%; /* Adjust modal max-width for smaller screens */
-        margin: 10% auto;
-    }
+            .modal-content {
+                width: 90%;
+                /* Adjust modal width for smaller screens */
+                max-width: 90%;
+                /* Adjust modal max-width for smaller screens */
+                margin: 10% auto;
+            }
         }
 
         .modal {
@@ -233,6 +236,22 @@
             margin-top: 10px;
             display: inline-block;
         }
+
+        .delete-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            margin-top: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .delete-button:hover {
+            background-color: #c0392b;
+        }
     </style>
 </head>
 
@@ -244,6 +263,9 @@
                 <h2>Manage Materials</h2>
             </div>
             <br>
+            <div class="button-bar">
+                <button class="add-button" id="addButton">Add Material</button>
+            </div>
             <div class="table-wrapper">
                 <table>
                     <thead>
@@ -262,16 +284,23 @@
                             <td><img src="{{ asset('storage/thumbnail/' . $material->display_image) }}" alt="Display Picture" style="width:100px; height:100px;"></td>
                             <td>{{ $material->lesson_title }}</td>
                             <td><a href="{{ asset('storage/pdf/' . $material->reading_material_pdf) }}" target="_blank"><button class="upload-button">View PDF</button></a></td>
-                            <td><button class="button edit-button" data-id="{{ $material->id }}" data-lesson-title="{{ $material->lesson_title }}" data-display-image="{{ $material->display_image }}" data-reading-material-pdf="{{ $material->reading_material_pdf }}">Edit</button></td>
+                            <td>
+                                <button class="button edit-button" data-id="{{ $material->id }}" data-lesson-title="{{ $material->lesson_title }}" data-display-image="{{ $material->display_image }}" data-reading-material-pdf="{{ $material->reading_material_pdf }}">Edit</button>
+                                <form action="{{ route('materials.destroy', $material->id) }}" method="POST" style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="button delete-button" onclick="return confirm('Are you sure you want to delete this material?')">Delete</button>
+                                </form>
+                            </td>
                         </tr>
                         @endforeach
 
-                        <!-- The Modal -->
+                        <!-- The Modal for Edit -->
                         <div id="editModal" class="modal">
                             <div class="modal-content">
                                 <span class="close">&times;</span>
                                 <h2>Edit Material</h2>
-                                <form id="editForm" action="{{ route('materials.update', ':material_id') }}" method="POST" enctype="multipart/form-data">
+                                <form id="editForm" action="" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div>
@@ -293,21 +322,51 @@
                             </div>
                         </div>
 
+                        <!-- The Modal for Add -->
+                        <div id="addModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close">&times;</span>
+                                <h2 id="modalTitle">Add Material</h2>
+                                <form id="addForm" action="{{ route('materials.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div>
+                                        <label for="lesson_title_add">Lesson Title:</label>
+                                        <input type="text" id="lesson_title_add" name="lesson_title" required>
+                                    </div>
+                                    <div>
+                                        <label for="display_image_add">Display Image:</label>
+                                        <input type="file" id="display_image_add" name="display_image" accept="image/*">
+                                    </div>
+                                    <div>
+                                        <label for="reading_material_pdf_add">PDF File:</label>
+                                        <input type="file" id="reading_material_pdf_add" name="reading_material_pdf" accept="application/pdf">
+                                    </div>
+                                    <button type="submit">Add Material</button>
+                                </form>
+                            </div>
+                        </div>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    <!-- JavaScript for modals and interactions -->
     <script>
-        var modal = document.getElementById("editModal");
+        var editModal = document.getElementById("editModal");
+        var addModal = document.getElementById("addModal");
         var editForm = document.getElementById("editForm");
-        var btns = document.getElementsByClassName("edit-button");
-        var span = document.getElementsByClassName("close")[0];
+        var addForm = document.getElementById("addForm");
+        var editButtons = document.getElementsByClassName("edit-button");
+        var deleteButtons = document.getElementsByClassName("delete-button");
+        var addButton = document.getElementById("addButton");
+        var closeButtons = document.getElementsByClassName("close");
 
-        Array.from(btns).forEach(function(btn) {
+        // Open edit modal when edit button is clicked
+        Array.from(editButtons).forEach(function(btn) {
             btn.onclick = function() {
-                modal.style.display = "block";
+                editModal.style.display = "block";
+                // Populate form fields with current data
                 document.getElementById('lesson_title').value = this.getAttribute('data-lesson-title');
                 document.getElementById('current_display_image').src = '/storage/thumbnail/' + this.getAttribute('data-display-image');
                 document.getElementById('current_reading_material_pdf').href = '/storage/pdf/' + this.getAttribute('data-reading-material-pdf');
@@ -316,15 +375,28 @@
             }
         });
 
-        span.onclick = function() {
-            modal.style.display = "none";
+        // Open add modal when add button is clicked
+        addButton.onclick = function() {
+            addModal.style.display = "block";
         }
 
+        // Close modals when close button is clicked
+        Array.from(closeButtons).forEach(function(btn) {
+            btn.onclick = function() {
+                editModal.style.display = "none";
+                addModal.style.display = "none";
+            }
+        });
+
+        // Close modals when user clicks outside of the modal
         window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
+            if (event.target == editModal || event.target == addModal) {
+                editModal.style.display = "none";
+                addModal.style.display = "none";
             }
         }
+
+        
     </script>
 
 </body>

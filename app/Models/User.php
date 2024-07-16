@@ -11,7 +11,7 @@ class User extends Model
 
     protected $table = 'users';
 
-    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'type', 'is_active'];
+    protected $fillable = ['first_name', 'last_name', 'email', 'password', 'type', 'is_active', 'is_archived'];
 
     public function summativeResult() {
         return $this->hasMany(SummativeResult::class, 'summative_results_user_id', 'id');
@@ -19,7 +19,7 @@ class User extends Model
 
     public function readingProgress()
     {
-        return $this->hasOne(ReadingProgress::class, 'reading_progress_user_id');
+        return $this->hasMany(ReadingProgress::class);
     }
 
     public function labProgress()

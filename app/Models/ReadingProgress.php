@@ -9,11 +9,11 @@ class ReadingProgress extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['first_chapter_is_done', 'second_chapter_is_done', 'third_chapter_is_done', 'fourth_chapter_is_done', 'fifth_chapter_is_done', 'sixth_chapter_is_done', 'reading_progress_user_id'];
+    protected $fillable = ['user_id', 'chapter_number', 'is_done'];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'reading_progress_user_id');
+        return $this->belongsTo(User::class);
     }
     
 }
