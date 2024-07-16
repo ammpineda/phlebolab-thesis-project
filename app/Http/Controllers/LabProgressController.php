@@ -14,22 +14,33 @@ class LabProgressController extends Controller
     public function retrieveLabProgress() {
         $userId = session('user_id');
         
+        // Retrieve the lab progress for the user
         $labProgress = LabProgress::where('lab_progress_user_id', $userId)->first();
     
         if (!$labProgress) {
             abort(404, 'Lab progress not found for the user.');
         }
-
-        $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
     
-        if (!$readingProgress) {
+        // Retrieve the last reading progress chapter based on the highest chapter_number
+        $lastReadingProgress = ReadingProgress::where('user_id', $userId)
+                                               ->orderBy('chapter_number', 'desc')
+                                               ->first();
+    
+        if (!$lastReadingProgress) {
             abort(404, 'Reading progress not found for the user.');
         }
     
+        // Check if the last chapter is done
+        $isLastChapterDone = $lastReadingProgress->is_done;
+    
+        // Retrieve user information
         $user = User::findOrFail($userId);
-        
-        return view('labs', compact('user', 'labProgress', 'readingProgress'));
+    
+        // Pass the last chapter status to the view
+        return view('labs', compact('user', 'labProgress', 'isLastChapterDone'));
     }
+    
+    
 
     // Exercise 1 Quiz
     public function toPracticeQuizOne(){

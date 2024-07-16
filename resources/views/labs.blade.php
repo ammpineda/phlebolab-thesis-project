@@ -137,7 +137,7 @@
                 <div class="button-container">
                     <p><strong>Laboratory Exercise 1:</strong><br> Equipment Familiarization</p>
                     <img src="assets/images/lab/lab1.png" alt="Exercise 1 Thumbnail"><br>
-                    @if($readingProgress->sixth_chapter_is_done)
+                    @if($isLastChapterDone)
                         <a href="{{ route('exercise_1') }}" class="open-button">Open</a>
                     @else
                         <a href="" class="locked-button">Locked</a>
