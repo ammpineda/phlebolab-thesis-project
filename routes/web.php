@@ -45,6 +45,10 @@ Route::get('/reading-materials',
     [ReadingProgressController::class, 'retrieveReadingProgress']
 )->name('reading-materials');
 
+Route::get('/chapter/{chapter_number}', [ReadingProgressController::class, 'show'])->name('chapter');
+
+Route::post('/chapter-done/{chapter}', [ReadingProgressController::class, 'markChapterAsDone'])->name('chapter-done');
+
 
 // chapter 1
 

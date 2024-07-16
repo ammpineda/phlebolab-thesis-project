@@ -15,7 +15,7 @@ class ReadingProgressController extends Controller
     public function retrieveReadingProgress() {
         $userId = session('user_id');
         
-        $readingProgress = ReadingProgress::where('reading_progress_user_id', $userId)->first();
+        $readingProgress = ReadingProgress::where('user_id', $userId)->first();
 
         $readingMaterials = ReadingMaterials::all();
     
@@ -28,6 +28,41 @@ class ReadingProgressController extends Controller
         return view('materials', compact('user', 'readingProgress', 'readingMaterials'));
     }
 
+    public function show($chapter_number)
+    {
+        // Assuming ReadingMaterial model and attributes are appropriately defined
+        $readingMaterial = ReadingMaterials::findOrFail($chapter_number);
+
+        // Return a view with the specific chapter content
+        return view('reading chapters/chapter', ['readingMaterial' => $readingMaterial]);
+    }
+
+    public function markChapterAsDone(Request $request, $chapter)
+    {
+        // Retrieve the user ID from the session or any other method you're using
+        $userId = $request->session()->get('user_id');
+
+        // Ensure user ID is valid and exists
+        if (!$userId) {
+            abort(404, 'User ID not found.');
+        }
+
+        // Find or create reading progress for the user
+        $readingProgress = ReadingProgress::where('user_id', $userId)->first();
+        if (!$readingProgress) {
+            $readingProgress = ReadingProgress::create(['user_id' => $userId]);
+        }
+
+        // Update the corresponding chapter as done based on the received chapter ID
+        $readingProgress->updateOrCreate(
+            ['user_id' => $userId, 'chapter_number' => $chapter],
+            ['is_done' => true]
+        );
+
+        // Redirect back to the reading materials page
+        return redirect()->route('reading-materials');
+    }
+    
     public function updateReadingProgress(Request $request, $chapterNumber)
     {
         $user = $request->user(); // Get current authenticated user

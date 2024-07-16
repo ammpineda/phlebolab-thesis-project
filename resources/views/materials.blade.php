@@ -3,15 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <title>PhleboLab | Reading Materials</title>
-
     <link rel="icon" href="assets/images/favicon.ico.png" type="image/x-icon">
-
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-
     <!-- Styles -->
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:300);
@@ -20,45 +16,37 @@
             font-family: "Roboto", sans-serif;
             margin: 0;
         }
-
         .main-content {
             display: flex;
         }
-
         .container {
             margin-left: 250px;
             flex: 1;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            flex-wrap: wrap; 
+            flex-wrap: wrap;
         }
-
         .content {
-            margin: 30px; 
+            margin: 30px;
             text-align: left;
-            flex: 1; 
-            max-width: 100%; 
+            flex: 1;
+            max-width: 100%;
         }
-
         .welcome-message {
             font-size: 36px;
-            margin-bottom: -20px; 
+            margin-bottom: -20px;
         }
-
         .subtitle {
             font-size: 16px;
             color: #555;
             margin-bottom: 20px;
         }
-
         .button-grid {
             display: grid;
-            
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
         }
-
         .button-container {
             margin-bottom: 10px;
             text-align: center;
@@ -67,19 +55,13 @@
             background-color: #2d4789;
             color: #fff;
         }
-
         .button-container img {
             max-width: 100%;
             height: 400px;
             border-radius: 5px;
             margin-bottom: 10px;
         }
-
-        .button-container p {
-            font-size: 20px;
-        }
-
-        .open-button {
+        .open-button, .locked-button {
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -91,102 +73,46 @@
             border-radius: 5px;
             cursor: pointer;
         }
-
         .locked-button {
             background-color: #802635;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
         }
-
         @media screen and (max-width: 768px) {
             .main-content {
-                flex-direction: column; 
+                flex-direction: column;
                 margin-left: 0;
             }
-
             .container {
-                margin-left: 0; 
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
-@include('sidebar')  
+    @include('sidebar')
     <div class="main-content">
-    
-    <div class="container">
-        <div class="content">
-            <div class="welcome-message">
-                <h1>Reading Materials <i class="fas fa-book"></i></h1>
-            </div>
-            <div class="subtitle">
-                Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. 
-                The reading materials presented are sourced from "The Complete Textbook of Phlebotomy" by Lynn B. Hoeltke. Begin your learning journey by clicking on the respective chapters below.
-            </div>
-
-            <div class="button-grid">
-                <div class="button-container">
-                    <p><strong>Chapter 1:</strong><br> Introduction to Phlebotomy</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[0]->display_image) }}" alt="Chapter 1 Thumbnail"><br>
-                    <a href="{{ route('first_chapter') }}" class="open-button">Open</a>
+        <div class="container">
+            <div class="content">
+                <div class="welcome-message">
+                    <h1>Reading Materials <i class="fas fa-book"></i></h1>
                 </div>
-                <div class="button-container">
-                    <p><strong>Chapter 2:</strong><br>  Safety in Phlebotomy</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[1]->display_image) }}" alt="Chapter 2 Thumbnail"><br>
-                    @if($readingProgress->first_chapter_is_done)
-                        <a href="{{ route('second_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
+                <div class="subtitle">
+                    Explore comprehensive reading materials covering essential topics such as <strong>Basic Human Anatomy and Physiology</strong>, <strong>Anatomy and Physiology of the Circulatory System</strong>, <strong>Phlebotomy Equipment</strong>, <strong>Phlebotomy Technique</strong>, <strong>Safety in Phlebotomy</strong>, and <strong>Introduction to Phlebotomy</strong>. The reading materials presented are sourced from "The Complete Textbook of Phlebotomy" by Lynn B. Hoeltke. Begin your learning journey by clicking on the respective chapters below.
                 </div>
-                <div class="button-container">
-                    <p><strong>Chapter 3:</strong><br>  Basic Human Anatomy and Physiology</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[2]->display_image) }}" alt="Chapter 3 Thumbnail"><br>
-                    @if($readingProgress->second_chapter_is_done)
-                        <a href="{{ route('third_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
-                </div>
-                <div class="button-container">
-                    <p><strong>Chapter 4:</strong><br>Anatomy and Physiology of the Circulatory System</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[3]->display_image) }}" alt="Chapter 4 Thumbnail"><br>
-                    @if($readingProgress->third_chapter_is_done)
-                        <a href="{{ route('fourth_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
-                </div>
-                <div class="button-container">
-                    <p><strong>Chapter 5:</strong><br>  Phlebotomy Equipment</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[4]->display_image) }}" alt="Chapter 5 Thumbnail"><br>
-                    @if($readingProgress->fourth_chapter_is_done)
-                        <a href="{{ route('fifth_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
-                </div>
-                <div class="button-container">
-                    <p><strong>Chapter 6:</strong><br>  Phlebotomy Technique</p>
-                    <img src="{{ asset('storage/thumbnail/' . $readingMaterials[5]->display_image) }}" alt="Chapter 6 Thumbnail"><br>
-                    @if($readingProgress->fifth_chapter_is_done)
-                        <a href="{{ route('sixth_chapter') }}" class="open-button">Open</a>
-                    @else
-                        <a href="" class="locked-button">Locked</a>
-                    @endif
+                <div class="button-grid">
+                @foreach ($readingMaterials as $material)
+                    <div class="button-container">
+                        <p><strong>Chapter {{ $loop->iteration }}:</strong><br> {{ $material->title }}</p>
+                        <img src="{{ asset('storage/thumbnail/' . $material->display_image) }}" alt="{{ $material->title }} Thumbnail"><br>
+                        @if ($loop->first || $material->is_done)
+                        <a href="{{ route('chapter', ['chapter_number' => $material->id]) }}" class="open-button">Open</a>
+                        @else
+                        <a href="#" class="locked-button">Locked</a>
+                        @endif
+                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
     </div>
-    </div>
-
-
 </body>
 </html>
