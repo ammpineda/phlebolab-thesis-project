@@ -72,15 +72,15 @@ class ManagementController extends Controller
             'is_archived' => false
         ]);
 
-        // automatically creates a record for progress tracking
-        $student->readingProgress()->create([
-            'first_chapter_is_done' => false,
-            'second_chapter_is_done' => false,
-            'third_chapter_is_done' => false,
-            'fourth_chapter_is_done' => false,
-            'fifth_chapter_is_done' => false,
-            'sixth_chapter_is_done' => false,
-        ]);
+        $totalMaterials = ReadingMaterials::count();
+
+
+        for ($i = 1; $i <= $totalMaterials; $i++) {
+            $student->readingProgress()->create([
+                'chapter_number' => $i,
+                'is_done' => false,
+            ]);
+        }
 
         $student->labProgress()->create([
             'first_lab_is_done' => false,
